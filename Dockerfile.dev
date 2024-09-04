@@ -60,5 +60,8 @@ RUN wget ${devkit_url} -O ros2_ws/src/autodrive_devkit.zip
 RUN unzip ros2_ws/src/autodrive_devkit.zip -d ros2_ws/src/autodrive_devkit
 RUN rm ros2_ws/src/autodrive_devkit.zip
 
+# Build so workspace is ready
+RUN source /opt/ros/foxy/setup.bash && cd ros2_ws && colcon build
+
 # Expose sim port
 EXPOSE 4567
