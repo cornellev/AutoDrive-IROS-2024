@@ -4,6 +4,8 @@ WORKDIR /home/autodrive_devkit
 
 ARG devkit_url=https://github.com/AutoDRIVE-Ecosystem/AutoDRIVE-F1TENTH-Sim-Racing/releases/download/2024-iros-practice/autodrive_devkit.zip
 
+SHELL ["/bin/bash", "-c"]
+
 # Copied from https://github.com/AutoDRIVE-Ecosystem/AutoDRIVE-F1TENTH-Sim-Racing/blob/2024-iros-practice/autodrive_devkit.Dockerfile
 # Install system dependencies
 RUN apt update \
@@ -47,9 +49,8 @@ RUN apt update --fix-missing \
     && apt install -y xvfb ffmpeg libgdal-dev libsm6 libxext6
 
 # Set up bashrc
-RUN /bin/bash -c 'echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc' \
-    && /bin/bash -c 'echo "source /home/autodrive_devkit/ros2_ws/install/setup.bash" >> ~/.bashrc' \
-    && /bin/bash -c 'source ~/.bashrc'
+RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
+RUN echo "source /home/autodrive_devkit/ros2_ws/install/setup.bash" >> ~/.bashrc
 
 # Create workspace
 RUN mkdir -p ros2_ws/src
@@ -64,7 +65,7 @@ COPY . ros2_ws/src/comp_code
 COPY entrypoint.sh /home/autodrive_devkit/
 
 # Build
-RUN cd ros2_ws && colcon build
+RUN source /opt/ros/foxy/setup.bash && cd ros2_ws && colcon build
 
 # Expose sim port
 EXPOSE 4567
