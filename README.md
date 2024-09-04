@@ -19,5 +19,5 @@ For VSCode, there are some minimal extensions installed (mainly for ROS, C++, an
 If you want to install more ROS packages or something, you'll have to modify *both* `Dockerfile.dev` and `Dockerfile.prod`, then rebuild the container (VSCode should do this automatically for you when it detects changes).
 
 ## Building for prod
-1. Just run `docker build -t autodrive_comp_code -f Dockerfile.prod .` to build the container. 
-2. You should now be able to run the container using the competition instructions, like so: `docker run --name autodrive_f1tenth_api --rm -it --network=host --ipc=host -v /tmp/.X11-unix:/tmp.X11-umix:rw --env DISPLAY --privileged --gpus all autodrive_comp_code`.
+1. Just run `docker build -t autodrive_autodrive_iros_2024 -f Dockerfile.prod .` to build the container. 
+2. You should now be able to run the container using the competition instructions, like so: `docker run --name autodrive_f1tenth_api --rm -it --network=host --ipc=host -v /tmp/.X11-unix:/tmp.X11-umix:rw --env DISPLAY --privileged --gpus all autodrive_autodrive_iros_2024`.

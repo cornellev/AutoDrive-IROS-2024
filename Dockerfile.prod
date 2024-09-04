@@ -61,7 +61,7 @@ RUN unzip ros2_ws/src/autodrive_devkit.zip -d ros2_ws/src/autodrive_devkit
 RUN rm ros2_ws/src/autodrive_devkit.zip
 
 # Copy files
-COPY . ros2_ws/src/comp_code
+COPY . ros2_ws/src/autodrive_iros_2024
 COPY entrypoint.sh /home/autodrive_devkit/
 
 # Build so workspace is ready

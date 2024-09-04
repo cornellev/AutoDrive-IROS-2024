@@ -3,8 +3,8 @@
     "build": {
         "dockerfile": "Dockerfile.dev"
     },
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/autodrive_devkit/ros2_ws/src/comp_code,type=bind",
-    "workspaceFolder": "/home/autodrive_devkit/ros2_ws/src/comp_code",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024,type=bind",
+    "workspaceFolder": "/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024",
     "runArgs": [
         "--rm",
         "--network=host",

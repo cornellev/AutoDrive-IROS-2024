@@ -6,4 +6,4 @@ source /opt/ros/foxy/setup.bash
 source /home/autodrive_devkit/ros2_ws/install/setup.bash
 
 # Launch AutoDRIVE Devkit (ROS 2 API)
-ros2 run comp_code hello 
+ros2 run autodrive_iros_2024 hello 
