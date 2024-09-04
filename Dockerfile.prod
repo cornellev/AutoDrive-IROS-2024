@@ -64,8 +64,13 @@ RUN rm ros2_ws/src/autodrive_devkit.zip
 COPY . ros2_ws/src/comp_code
 COPY entrypoint.sh /home/autodrive_devkit/
 
-# Build
-RUN source /opt/ros/foxy/setup.bash && cd ros2_ws && colcon build
+# Build so workspace is ready
+RUN source /opt/ros/foxy/setup.bash \
+    && cd ros2_ws \
+    # && rosdep init \
+    && rosdep update \
+    && rosdep install --from-paths src -y --ignore-src \
+    && colcon build
 
 # Expose sim port
 EXPOSE 4567
