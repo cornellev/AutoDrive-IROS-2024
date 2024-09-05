@@ -70,6 +70,7 @@ RUN source /opt/ros/foxy/setup.bash \
     # && rosdep init \
     && rosdep update \
     && rosdep install --from-paths src -y --ignore-src \
+    && apt install ros-foxy-slam-toolbox \
     && colcon build
 
 # Expose sim port

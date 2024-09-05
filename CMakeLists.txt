@@ -23,9 +23,11 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
+find_package(slam_toolbox REQUIRED)
 
 add_executable(hello src/hello.cpp)
-ament_target_dependencies(hello rclcpp std_msgs sensor_msgs)
+ament_target_dependencies(hello rclcpp std_msgs sensor_msgs slam_toolbox)
+# ament_target_dependencies(hello rclcpp std_msgs sensor_msgs)
 target_include_directories(hello PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
