@@ -1,0 +1,17 @@
+digraph G {
+"f1tenth_1" -> "lidar"[label=" Broadcaster: default_authority\nAverage rate: 8.676\nBuffer length: 4.495\nMost recent transform: 1725588955.004439\nOldest transform: 1725588950.509179\n"];
+"world" -> "f1tenth_1"[label=" Broadcaster: default_authority\nAverage rate: 8.675\nBuffer length: 4.496\nMost recent transform: 1725588954.99704\nOldest transform: 1725588950.501298\n"];
+"f1tenth_1" -> "front_camera"[label=" Broadcaster: default_authority\nAverage rate: 8.675\nBuffer length: 4.495\nMost recent transform: 1725588955.005268\nOldest transform: 1725588950.509825\n"];
+"f1tenth_1" -> "front_left_wheel"[label=" Broadcaster: default_authority\nAverage rate: 8.676\nBuffer length: 4.495\nMost recent transform: 1725588955.006557\nOldest transform: 1725588950.511505\n"];
+"f1tenth_1" -> "front_right_wheel"[label=" Broadcaster: default_authority\nAverage rate: 8.675\nBuffer length: 4.496\nMost recent transform: 1725588955.008063\nOldest transform: 1725588950.512275\n"];
+"f1tenth_1" -> "rear_left_wheel"[label=" Broadcaster: default_authority\nAverage rate: 8.672\nBuffer length: 4.497\nMost recent transform: 1725588955.010733\nOldest transform: 1725588950.513313\n"];
+"f1tenth_1" -> "rear_right_wheel"[label=" Broadcaster: default_authority\nAverage rate: 8.669\nBuffer length: 4.499\nMost recent transform: 1725588955.012784\nOldest transform: 1725588950.513953\n"];
+"f1tenth_1" -> "left_encoder"[label=" Broadcaster: default_authority\nAverage rate: 8.675\nBuffer length: 4.496\nMost recent transform: 1725588954.998042\nOldest transform: 1725588950.502176\n"];
+"f1tenth_1" -> "right_encoder"[label=" Broadcaster: default_authority\nAverage rate: 8.674\nBuffer length: 4.496\nMost recent transform: 1725588954.999841\nOldest transform: 1725588950.503816\n"];
+"f1tenth_1" -> "ips"[label=" Broadcaster: default_authority\nAverage rate: 8.678\nBuffer length: 4.494\nMost recent transform: 1725588955.001648\nOldest transform: 1725588950.507283\n"];
+"f1tenth_1" -> "imu"[label=" Broadcaster: default_authority\nAverage rate: 8.676\nBuffer length: 4.495\nMost recent transform: 1725588955.003282\nOldest transform: 1725588950.507899\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1725588955.12356"[ shape=plaintext ] ;
+}->"world";
+}
