@@ -13,3 +13,7 @@
     <!-- Launch the simulator_bringup_rviz.launch.py from the autodrive_f1tenth package -->
     <!-- <include file="/home/autodrive_devkit/ros2_ws/src/autodrive_devkit/autodrive_devkit/launch/simulator_bringup_rviz.launch.py"/> -->
 </launch>
+
+<!-- ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 f1tenth_1 base_link -->
+<!-- ros2 run robot_localization ekf_node --ros-args --params-file src/autodrive_iros_2024/config/robot_localization.yaml -->
+<!-- ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 f1tenth_1 base_link -->
