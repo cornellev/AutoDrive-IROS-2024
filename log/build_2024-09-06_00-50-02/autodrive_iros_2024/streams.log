@@ -1,0 +1,22 @@
+[0.018s] Invoking command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --build /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024 -- -j20 -l20
+[0.116s] [100%] Built target hello
+[0.130s] Invoked command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --build /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024 -- -j20 -l20
+[0.162s] Invoking command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --install /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024
+[0.171s] -- Install configuration: ""
+[0.171s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/hello
+[0.171s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/package_run_dependencies/autodrive_iros_2024
+[0.171s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/parent_prefix_path/autodrive_iros_2024
+[0.171s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.sh
+[0.172s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.dsv
+[0.172s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.sh
+[0.172s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.dsv
+[0.172s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.bash
+[0.172s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.sh
+[0.172s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.zsh
+[0.173s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.dsv
+[0.173s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.dsv
+[0.173s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/packages/autodrive_iros_2024
+[0.173s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config.cmake
+[0.173s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config-version.cmake
+[0.173s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.xml
+[0.174s] Invoked command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --install /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024

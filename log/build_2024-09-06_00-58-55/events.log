@@ -1,0 +1,103 @@
+[0.000000] (-) TimerEvent: {}
+[0.000465] (autodrive_iros_2024) JobQueued: {'identifier': 'autodrive_iros_2024', 'dependencies': OrderedDict()}
+[0.000511] (autodrive_iros_2024) JobStarted: {'identifier': 'autodrive_iros_2024'}
+[0.011404] (autodrive_iros_2024) JobProgress: {'identifier': 'autodrive_iros_2024', 'progress': 'cmake'}
+[0.012616] (autodrive_iros_2024) JobProgress: {'identifier': 'autodrive_iros_2024', 'progress': 'build'}
+[0.012686] (autodrive_iros_2024) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024', '--', '-j20', '-l20'], 'cwd': '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024', 'env': OrderedDict([('HOSTNAME', 'sloth'), ('GIT_ASKPASS', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/extensions/git/dist/askpass.sh'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('BROWSER', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/bin/helpers/browser.sh'), ('HOME', '/root'), ('OLDPWD', '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/launch'), ('TERM_PROGRAM_VERSION', '1.92.2'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-79d3f652-bda1-4a7c-880f-901b2cb0277e.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/node'), ('COLORTERM', 'truecolor'), ('REMOTE_CONTAINERS', 'true'), ('WAYLAND_DISPLAY', 'vscode-wayland-56523186-5318-4715-9fce-5450559fce34.sock'), ('COLCON_PREFIX_PATH', '/home/autodrive_devkit/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-4bc0a6e8-b6e8-4970-9d83-4bb451ed1e69.sock'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/bin/remote-cli:/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('XDG_RUNTIME_DIR', '/tmp/user/0'), ('REMOTE_CONTAINERS_SOCKETS', '["/root/.gnupg/S.gpg-agent"]'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/user/0/vscode-git-a600071623.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024'), ('LC_ALL', 'C.UTF-8'), ('PYTHONPATH', '/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy')]), 'shell': False}
+[0.039150] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found ament_cmake: 0.9.12 (/opt/ros/foxy/share/ament_cmake/cmake)\n'}
+[0.056081] (autodrive_iros_2024) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.099772] (-) TimerEvent: {}
+[0.155258] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found rclcpp: 2.4.3 (/opt/ros/foxy/share/rclcpp/cmake)\n'}
+[0.177841] (autodrive_iros_2024) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.179845] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.3.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[0.199901] (-) TimerEvent: {}
+[0.287366] (autodrive_iros_2024) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.300024] (-) TimerEvent: {}
+[0.321169] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.4 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)\n'}
+[0.322008] (autodrive_iros_2024) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.400223] (-) TimerEvent: {}
+[0.419142] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found sensor_msgs: 2.0.5 (/opt/ros/foxy/share/sensor_msgs/cmake)\n'}
+[0.495826] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found slam_toolbox: 2.4.1 (/opt/ros/foxy/share/slam_toolbox/cmake)\n'}
+[0.500446] (-) TimerEvent: {}
+[0.600877] (-) TimerEvent: {}
+[0.701311] (-) TimerEvent: {}
+[0.801640] (-) TimerEvent: {}
+[0.902056] (-) TimerEvent: {}
+[1.002380] (-) TimerEvent: {}
+[1.012294] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found eigen3_cmake_module: 0.1.1 (/opt/ros/foxy/share/eigen3_cmake_module/cmake)\n'}
+[1.073022] (autodrive_iros_2024) StdoutLine: {'line': b"-- Setting OGRE_DIR to: '/opt/ros/foxy/share/rviz_ogre_vendor/cmake/../../../opt/rviz_ogre_vendor/lib/OGRE/cmake'\n"}
+[1.074486] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found OGRE\n'}
+[1.074602] (autodrive_iros_2024) StdoutLine: {'line': b'--   static     : OFF\n'}
+[1.074692] (autodrive_iros_2024) StdoutLine: {'line': b'--   components : HLMS;MeshLodGenerator;Overlay;Paging;Property;RTShaderSystem;Terrain;Volume\n'}
+[1.074845] (autodrive_iros_2024) StdoutLine: {'line': b'--   plugins    : Plugin_BSPSceneManager;Plugin_OctreeSceneManager;Plugin_PCZSceneManager;Plugin_ParticleFX;RenderSystem_GL;RenderSystem_GL3Plus;Codec_STBI\n'}
+[1.074939] (autodrive_iros_2024) StdoutLine: {'line': b'--   media      : /opt/ros/foxy/opt/rviz_ogre_vendor/share/OGRE/Media\n'}
+[1.075025] (autodrive_iros_2024) StdoutLine: {'line': b'-- OGRE_LIBRARIES: OgreHLMS;OgreMeshLodGenerator;OgreOverlay;OgrePaging;OgreProperty;OgreRTShaderSystem;OgreTerrain;OgreVolume;OgreMain\n'}
+[1.075108] (autodrive_iros_2024) StdoutLine: {'line': b'-- OGRE_LIBRARY_DIRS: /opt/ros/foxy/opt/rviz_ogre_vendor/lib\n'}
+[1.075193] (autodrive_iros_2024) StdoutLine: {'line': b'-- OGRE_PLUGINS: Plugin_BSPSceneManager;Plugin_OctreeSceneManager;Plugin_PCZSceneManager;Plugin_ParticleFX;RenderSystem_GL;RenderSystem_GL3Plus;Codec_STBI\n'}
+[1.075277] (autodrive_iros_2024) StdoutLine: {'line': b'-- OGRE_PLUGIN_DIR: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/OGRE\n'}
+[1.075359] (autodrive_iros_2024) StdoutLine: {'line': b'-- rviz_ogre_vendor::OgreOverlay for IMPORTED_LOCATION_RELEASE: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreOverlay.so\n'}
+[1.075442] (autodrive_iros_2024) StdoutLine: {'line': b'-- rviz_ogre_vendor::OgreOverlay for IMPORTED_LOCATION_DEBUG: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreOverlay.so\n'}
+[1.075596] (autodrive_iros_2024) StdoutLine: {'line': b'-- rviz_ogre_vendor::OgreMain for IMPORTED_LOCATION_RELEASE: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreMain.so\n'}
+[1.075677] (autodrive_iros_2024) StdoutLine: {'line': b'-- rviz_ogre_vendor::OgreMain for IMPORTED_LOCATION_DEBUG: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreMain.so\n'}
+[1.075833] (autodrive_iros_2024) StdoutLine: {'line': b'-- Could not find freeimage library\n'}
+[1.102487] (-) TimerEvent: {}
+[1.103940] (autodrive_iros_2024) StdoutLine: {'line': b'-- rviz_ogre_vendor::RenderSystem_GL for IMPORTED_LOCATION_RELEASE: _render_system_gl_static_library_abs-NOTFOUND\n'}
+[1.104078] (autodrive_iros_2024) StdoutLine: {'line': b'-- rviz_ogre_vendor::RenderSystem_GL for IMPORTED_LOCATION_DEBUG: _render_system_gl_static_library_abs-NOTFOUND\n'}
+[1.105062] (autodrive_iros_2024) StdoutLine: {'line': b'-- library: libassimp.so.5\n'}
+[1.122410] (autodrive_iros_2024) StdoutLine: {'line': b'-- library: /usr/lib/x86_64-linux-gnu/libcurl.so\n'}
+[1.173497] (autodrive_iros_2024) StdoutLine: {'line': b"-- Setting yaml-cpp_DIR to: '/opt/ros/foxy/share/yaml_cpp_vendor/cmake/../../../opt/yaml_cpp_vendor/lib/cmake/yaml-cpp'\n"}
+[1.202691] (-) TimerEvent: {}
+[1.303027] (-) TimerEvent: {}
+[1.403345] (-) TimerEvent: {}
+[1.443301] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found robot_localization: 3.1.2 (/opt/ros/foxy/share/robot_localization/cmake)\n'}
+[1.503450] (-) TimerEvent: {}
+[1.603752] (-) TimerEvent: {}
+[1.689323] (autodrive_iros_2024) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.8 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[1.703912] (-) TimerEvent: {}
+[1.734517] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[1.744239] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[1.744433] (autodrive_iros_2024) StdoutLine: {'line': b'-- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/include>\n'}
+[1.744524] (autodrive_iros_2024) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[1.753623] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'cpplint' to check C / C++ code against the Google style\n"}
+[1.753824] (autodrive_iros_2024) StdoutLine: {'line': b'-- Configured cpplint exclude dirs and/or files: \n'}
+[1.755012] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[1.757473] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[1.758788] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257\n"}
+[1.768047] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[1.768247] (autodrive_iros_2024) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[1.769466] (autodrive_iros_2024) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[1.771558] (autodrive_iros_2024) StdoutLine: {'line': b'-- Configuring done\n'}
+[1.788439] (autodrive_iros_2024) StdoutLine: {'line': b'-- Generating done\n'}
+[1.789936] (autodrive_iros_2024) StdoutLine: {'line': b'-- Build files have been written to: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024\n'}
+[1.804132] (-) TimerEvent: {}
+[1.832857] (autodrive_iros_2024) StdoutLine: {'line': b'[ 50%] \x1b[32m\x1b[1mLinking CXX executable hello\x1b[0m\n'}
+[1.904367] (-) TimerEvent: {}
+[2.004698] (-) TimerEvent: {}
+[2.089801] (autodrive_iros_2024) StdoutLine: {'line': b'[100%] Built target hello\n'}
+[2.098410] (autodrive_iros_2024) CommandEnded: {'returncode': 0}
+[2.104796] (-) TimerEvent: {}
+[2.123816] (autodrive_iros_2024) JobProgress: {'identifier': 'autodrive_iros_2024', 'progress': 'install'}
+[2.132589] (autodrive_iros_2024) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024'], 'cwd': '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024', 'env': OrderedDict([('HOSTNAME', 'sloth'), ('GIT_ASKPASS', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/extensions/git/dist/askpass.sh'), ('SHLVL', '2'), ('LD_LIBRARY_PATH', '/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('BROWSER', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/bin/helpers/browser.sh'), ('HOME', '/root'), ('OLDPWD', '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/launch'), ('TERM_PROGRAM_VERSION', '1.92.2'), ('VSCODE_IPC_HOOK_CLI', '/tmp/vscode-ipc-79d3f652-bda1-4a7c-880f-901b2cb0277e.sock'), ('ROS_PYTHON_VERSION', '3'), ('VSCODE_GIT_ASKPASS_MAIN', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/extensions/git/dist/askpass-main.js'), ('VSCODE_GIT_ASKPASS_NODE', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/node'), ('COLORTERM', 'truecolor'), ('REMOTE_CONTAINERS', 'true'), ('WAYLAND_DISPLAY', 'vscode-wayland-56523186-5318-4715-9fce-5450559fce34.sock'), ('COLCON_PREFIX_PATH', '/home/autodrive_devkit/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('REMOTE_CONTAINERS_IPC', '/tmp/vscode-remote-containers-ipc-4bc0a6e8-b6e8-4970-9d83-4bb451ed1e69.sock'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('TERM', 'xterm-256color'), ('ROS_LOCALHOST_ONLY', '0'), ('PATH', '/vscode/vscode-server/bin/linux-x64/fee1edb8d6d72a0ddff41e5f71a671c23ed924b9/bin/remote-cli:/opt/ros/foxy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'), ('XDG_RUNTIME_DIR', '/tmp/user/0'), ('REMOTE_CONTAINERS_SOCKETS', '["/root/.gnupg/S.gpg-agent"]'), ('DISPLAY', ':0'), ('LANG', 'C.UTF-8'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('VSCODE_GIT_IPC_HANDLE', '/tmp/user/0/vscode-git-a600071623.sock'), ('TERM_PROGRAM', 'vscode'), ('AMENT_PREFIX_PATH', '/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy'), ('SHELL', '/bin/bash'), ('VSCODE_GIT_ASKPASS_EXTRA_ARGS', ''), ('PWD', '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024'), ('LC_ALL', 'C.UTF-8'), ('PYTHONPATH', '/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('CMAKE_PREFIX_PATH', '/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy')]), 'shell': False}
+[2.144355] (autodrive_iros_2024) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[2.144527] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/hello\n'}
+[2.145540] (autodrive_iros_2024) StdoutLine: {'line': b'-- Set runtime path of "/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/hello" to ""\n'}
+[2.145622] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch\n'}
+[2.145693] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch/test_bed.py\n'}
+[2.145758] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/package_run_dependencies/autodrive_iros_2024\n'}
+[2.145822] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/parent_prefix_path/autodrive_iros_2024\n'}
+[2.145882] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.sh\n'}
+[2.145944] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.dsv\n'}
+[2.146046] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.sh\n'}
+[2.146110] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.dsv\n'}
+[2.146148] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.bash\n'}
+[2.146184] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.sh\n'}
+[2.146219] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.zsh\n'}
+[2.146269] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.dsv\n'}
+[2.146338] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.dsv\n'}
+[2.146374] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/packages/autodrive_iros_2024\n'}
+[2.146406] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config.cmake\n'}
+[2.146438] (autodrive_iros_2024) StdoutLine: {'line': b'-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config-version.cmake\n'}
+[2.146469] (autodrive_iros_2024) StdoutLine: {'line': b'-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.xml\n'}
+[2.147824] (autodrive_iros_2024) CommandEnded: {'returncode': 0}
+[2.190688] (autodrive_iros_2024) JobEnded: {'identifier': 'autodrive_iros_2024', 'rc': 0}
+[2.191173] (-) EventReactorShutdown: {}
