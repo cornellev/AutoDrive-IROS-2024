@@ -1,0 +1,18 @@
+[100%] Built target hello
+-- Install configuration: ""
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/hello
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/package_run_dependencies/autodrive_iros_2024
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/parent_prefix_path/autodrive_iros_2024
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.sh
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.sh
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.dsv
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.bash
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.sh
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.zsh
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.dsv
+-- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.dsv
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/packages/autodrive_iros_2024
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config.cmake
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config-version.cmake
+-- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.xml

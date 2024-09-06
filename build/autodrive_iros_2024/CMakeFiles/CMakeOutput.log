@@ -487,3 +487,87 @@ make[1]: Leaving directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_20
 
 
 
+Determining if the function XOpenDisplay exists in the /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so passed with the following output:
+Change Dir: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_5f0cf/fast && /usr/bin/make -f CMakeFiles/cmTC_5f0cf.dir/build.make CMakeFiles/cmTC_5f0cf.dir/build
+make[1]: Entering directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_5f0cf.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay   -o CMakeFiles/cmTC_5f0cf.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_5f0cf
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5f0cf.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=XOpenDisplay    CMakeFiles/cmTC_5f0cf.dir/CheckFunctionExists.c.o  -o cmTC_5f0cf  /usr/lib/x86_64-linux-gnu/libX11.so /usr/lib/x86_64-linux-gnu/libXext.so 
+make[1]: Leaving directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function gethostbyname exists passed with the following output:
+Change Dir: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_ec954/fast && /usr/bin/make -f CMakeFiles/cmTC_ec954.dir/build.make CMakeFiles/cmTC_ec954.dir/build
+make[1]: Entering directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ec954.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname   -o CMakeFiles/cmTC_ec954.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_ec954
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ec954.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=gethostbyname    CMakeFiles/cmTC_ec954.dir/CheckFunctionExists.c.o  -o cmTC_ec954 
+make[1]: Leaving directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function connect exists passed with the following output:
+Change Dir: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_9abd9/fast && /usr/bin/make -f CMakeFiles/cmTC_9abd9.dir/build.make CMakeFiles/cmTC_9abd9.dir/build
+make[1]: Entering directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9abd9.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect   -o CMakeFiles/cmTC_9abd9.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_9abd9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9abd9.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=connect    CMakeFiles/cmTC_9abd9.dir/CheckFunctionExists.c.o  -o cmTC_9abd9 
+make[1]: Leaving directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function remove exists passed with the following output:
+Change Dir: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_6762a/fast && /usr/bin/make -f CMakeFiles/cmTC_6762a.dir/build.make CMakeFiles/cmTC_6762a.dir/build
+make[1]: Entering directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_6762a.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove   -o CMakeFiles/cmTC_6762a.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_6762a
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6762a.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=remove    CMakeFiles/cmTC_6762a.dir/CheckFunctionExists.c.o  -o cmTC_6762a 
+make[1]: Leaving directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function shmat exists passed with the following output:
+Change Dir: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_28b6b/fast && /usr/bin/make -f CMakeFiles/cmTC_28b6b.dir/build.make CMakeFiles/cmTC_28b6b.dir/build
+make[1]: Entering directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_28b6b.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat   -o CMakeFiles/cmTC_28b6b.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_28b6b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_28b6b.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=shmat    CMakeFiles/cmTC_28b6b.dir/CheckFunctionExists.c.o  -o cmTC_28b6b 
+make[1]: Leaving directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+
+
+
+Determining if the function IceConnectionNumber exists in the ICE passed with the following output:
+Change Dir: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/make cmTC_61d57/fast && /usr/bin/make -f CMakeFiles/cmTC_61d57.dir/build.make CMakeFiles/cmTC_61d57.dir/build
+make[1]: Entering directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_61d57.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber   -o CMakeFiles/cmTC_61d57.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_61d57
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_61d57.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=IceConnectionNumber    CMakeFiles/cmTC_61d57.dir/CheckFunctionExists.c.o  -o cmTC_61d57  -lICE 
+make[1]: Leaving directory '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024/CMakeFiles/CMakeTmp'
+
+
+

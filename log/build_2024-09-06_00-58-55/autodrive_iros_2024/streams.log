@@ -1,0 +1,74 @@
+[0.015s] Invoking command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024': CMAKE_PREFIX_PATH=/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --build /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024 -- -j20 -l20
+[0.039s] -- Found ament_cmake: 0.9.12 (/opt/ros/foxy/share/ament_cmake/cmake)
+[0.056s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[0.155s] -- Found rclcpp: 2.4.3 (/opt/ros/foxy/share/rclcpp/cmake)
+[0.177s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.179s] -- Found rosidl_adapter: 1.3.1 (/opt/ros/foxy/share/rosidl_adapter/cmake)
+[0.287s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.321s] -- Found rmw_implementation_cmake: 1.0.4 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)
+[0.322s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.419s] -- Found sensor_msgs: 2.0.5 (/opt/ros/foxy/share/sensor_msgs/cmake)
+[0.495s] -- Found slam_toolbox: 2.4.1 (/opt/ros/foxy/share/slam_toolbox/cmake)
+[1.012s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/foxy/share/eigen3_cmake_module/cmake)
+[1.073s] -- Setting OGRE_DIR to: '/opt/ros/foxy/share/rviz_ogre_vendor/cmake/../../../opt/rviz_ogre_vendor/lib/OGRE/cmake'
+[1.074s] -- Found OGRE
+[1.074s] --   static     : OFF
+[1.074s] --   components : HLMS;MeshLodGenerator;Overlay;Paging;Property;RTShaderSystem;Terrain;Volume
+[1.074s] --   plugins    : Plugin_BSPSceneManager;Plugin_OctreeSceneManager;Plugin_PCZSceneManager;Plugin_ParticleFX;RenderSystem_GL;RenderSystem_GL3Plus;Codec_STBI
+[1.074s] --   media      : /opt/ros/foxy/opt/rviz_ogre_vendor/share/OGRE/Media
+[1.075s] -- OGRE_LIBRARIES: OgreHLMS;OgreMeshLodGenerator;OgreOverlay;OgrePaging;OgreProperty;OgreRTShaderSystem;OgreTerrain;OgreVolume;OgreMain
+[1.075s] -- OGRE_LIBRARY_DIRS: /opt/ros/foxy/opt/rviz_ogre_vendor/lib
+[1.075s] -- OGRE_PLUGINS: Plugin_BSPSceneManager;Plugin_OctreeSceneManager;Plugin_PCZSceneManager;Plugin_ParticleFX;RenderSystem_GL;RenderSystem_GL3Plus;Codec_STBI
+[1.075s] -- OGRE_PLUGIN_DIR: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/OGRE
+[1.075s] -- rviz_ogre_vendor::OgreOverlay for IMPORTED_LOCATION_RELEASE: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreOverlay.so
+[1.075s] -- rviz_ogre_vendor::OgreOverlay for IMPORTED_LOCATION_DEBUG: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreOverlay.so
+[1.075s] -- rviz_ogre_vendor::OgreMain for IMPORTED_LOCATION_RELEASE: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreMain.so
+[1.075s] -- rviz_ogre_vendor::OgreMain for IMPORTED_LOCATION_DEBUG: /opt/ros/foxy/opt/rviz_ogre_vendor/lib/libOgreMain.so
+[1.075s] -- Could not find freeimage library
+[1.104s] -- rviz_ogre_vendor::RenderSystem_GL for IMPORTED_LOCATION_RELEASE: _render_system_gl_static_library_abs-NOTFOUND
+[1.104s] -- rviz_ogre_vendor::RenderSystem_GL for IMPORTED_LOCATION_DEBUG: _render_system_gl_static_library_abs-NOTFOUND
+[1.105s] -- library: libassimp.so.5
+[1.122s] -- library: /usr/lib/x86_64-linux-gnu/libcurl.so
+[1.173s] -- Setting yaml-cpp_DIR to: '/opt/ros/foxy/share/yaml_cpp_vendor/cmake/../../../opt/yaml_cpp_vendor/lib/cmake/yaml-cpp'
+[1.443s] -- Found robot_localization: 3.1.2 (/opt/ros/foxy/share/robot_localization/cmake)
+[1.689s] -- Found ament_lint_auto: 0.9.8 (/opt/ros/foxy/share/ament_lint_auto/cmake)
+[1.734s] -- Added test 'copyright' to check source files copyright and LICENSE
+[1.744s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[1.744s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/include>
+[1.744s] -- Configured cppcheck exclude dirs and/or files: 
+[1.753s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[1.753s] -- Configured cpplint exclude dirs and/or files: 
+[1.755s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.757s] -- Added test 'lint_cmake' to check CMake code style
+[1.758s] -- Added test 'pep257' to check Python code against some of the style conventions in PEP 257
+[1.768s] -- Added test 'uncrustify' to check C / C++ code style
+[1.768s] -- Configured uncrustify additional arguments: 
+[1.769s] -- Added test 'xmllint' to check XML markup files
+[1.771s] -- Configuring done
+[1.788s] -- Generating done
+[1.790s] -- Build files have been written to: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024
+[1.832s] [ 50%] [32m[1mLinking CXX executable hello[0m
+[2.089s] [100%] Built target hello
+[2.098s] Invoked command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024' returned '0': CMAKE_PREFIX_PATH=/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --build /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024 -- -j20 -l20
+[2.133s] Invoking command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024': CMAKE_PREFIX_PATH=/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --install /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024
+[2.144s] -- Install configuration: ""
+[2.144s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/hello
+[2.145s] -- Set runtime path of "/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/hello" to ""
+[2.145s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch
+[2.145s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch/test_bed.py
+[2.145s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/package_run_dependencies/autodrive_iros_2024
+[2.145s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/parent_prefix_path/autodrive_iros_2024
+[2.145s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.sh
+[2.145s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.dsv
+[2.146s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.sh
+[2.146s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/path.dsv
+[2.146s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.bash
+[2.146s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.sh
+[2.146s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.zsh
+[2.146s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/local_setup.dsv
+[2.146s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.dsv
+[2.146s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/packages/autodrive_iros_2024
+[2.146s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config.cmake
+[2.146s] -- Up-to-date: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/cmake/autodrive_iros_2024Config-version.cmake
+[2.146s] -- Installing: /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/package.xml
+[2.148s] Invoked command in '/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024' returned '0': CMAKE_PREFIX_PATH=/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth:/opt/ros/foxy /usr/bin/cmake --install /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/build/autodrive_iros_2024
