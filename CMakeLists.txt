@@ -24,9 +24,10 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(slam_toolbox REQUIRED)
+find_package(robot_localization REQUIRED)
 
 add_executable(hello src/hello.cpp)
-ament_target_dependencies(hello rclcpp std_msgs sensor_msgs slam_toolbox)
+ament_target_dependencies(hello rclcpp std_msgs sensor_msgs slam_toolbox robot_localization)
 # ament_target_dependencies(hello rclcpp std_msgs sensor_msgs)
 target_include_directories(hello PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -35,6 +36,10 @@ target_include_directories(hello PUBLIC
 install(TARGETS 
   hello
   DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY launch/
+  DESTINATION share/${PROJECT_NAME}/launch
+)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
