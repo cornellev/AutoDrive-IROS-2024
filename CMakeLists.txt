@@ -28,13 +28,19 @@ find_package(robot_localization REQUIRED)
 
 add_executable(hello src/hello.cpp)
 ament_target_dependencies(hello rclcpp std_msgs sensor_msgs slam_toolbox robot_localization)
-# ament_target_dependencies(hello rclcpp std_msgs sensor_msgs)
 target_include_directories(hello PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
+add_executable(actuator_control src/actuator_control.cpp)
+ament_target_dependencies(actuator_control rclcpp std_msgs nav_msgs message_filters control_toolbox)
+target_include_directories(actuator_control PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS 
   hello
+  actuator_control
   DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch/

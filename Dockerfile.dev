@@ -60,14 +60,20 @@ RUN wget ${devkit_url} -O ros2_ws/src/autodrive_devkit.zip
 RUN unzip ros2_ws/src/autodrive_devkit.zip -d ros2_ws/src/autodrive_devkit
 RUN rm ros2_ws/src/autodrive_devkit.zip
 
-# Build so workspace is ready
+# Copy package.xml so we can install packages declared there
+COPY package.xml ros2_ws/src/temp/
+
+# Install declared packages
 RUN source /opt/ros/foxy/setup.bash \
-    && cd ros2_ws \
-    # && rosdep init \
-    && rosdep update \
-    && rosdep install --from-paths src -y --ignore-src \
-    && apt install -y ros-foxy-slam-toolbox ros-foxy-robot-localization \
-    && colcon build
+    && cd ros2_ws/src \
+    && rosdep update --include-eol-distros  \
+    && rosdep install --from-paths . -i -y --include-eol-distros
+
+# Remove package.xml so things sync correctly with devcontainers
+RUN rm -r ros2_ws/src/temp/
+
+# Build so workspace is ready
+RUN source /opt/ros/foxy/setup.bash && cd ros2_ws && colcon build
 
 # Expose sim port
 EXPOSE 4567

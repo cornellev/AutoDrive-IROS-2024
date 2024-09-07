@@ -64,14 +64,14 @@ RUN rm ros2_ws/src/autodrive_devkit.zip
 COPY . ros2_ws/src/autodrive_iros_2024
 COPY entrypoint.sh /home/autodrive_devkit/
 
-# Build so workspace is ready
+# Install declared packages
 RUN source /opt/ros/foxy/setup.bash \
-    && cd ros2_ws \
-    # && rosdep init \
-    && rosdep update \
-    && rosdep install --from-paths src -y --ignore-src \
-    && apt install -y ros-foxy-slam-toolbox ros-foxy-robot-localization \
-    && colcon build
+    && cd ros2_ws/src \
+    && rosdep update --include-eol-distros  \
+    && rosdep install --from-paths . -i -y --include-eol-distros
+
+# Build
+RUN source /opt/ros/foxy/setup.bash && cd ros2_ws && colcon build
 
 # Expose sim port
 EXPOSE 4567
