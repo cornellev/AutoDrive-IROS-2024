@@ -50,15 +50,15 @@ def generate_launch_description():
         #### NODES ####
 
         # robot_localization ekf_node
-        # Node(
-        #     package='robot_localization',
-        #     executable='ekf_node',
-        #     name='ekf_filter_node',
-        #     parameters=[
-        #         config_file_path  # Replace with the correct path to your parameters file
-        #     ],
-        #     output='screen'
-        # ),
+        Node(
+            package='robot_localization',
+            executable='ekf_node',
+            name='ekf_filter_node',
+            parameters=[
+                config_file_path  # Replace with the correct path to your parameters file
+            ],
+            output='screen'
+        ),
         Node(
             package='autodrive_iros_2024',
             executable='frame_republisher',

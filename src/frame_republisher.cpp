@@ -45,7 +45,7 @@ private:
 
                 tf_broadcaster_->sendTransform(newTransformStamped);
 
-                RCLCPP_INFO(this->get_logger(), "Republished %s to base_link", frame.c_str());
+                // RCLCPP_INFO(this->get_logger(), "Republished %s to base_link", frame.c_str());
             }
             catch (const tf2::TransformException &ex)
             {
