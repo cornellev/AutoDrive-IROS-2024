@@ -16,7 +16,8 @@ def generate_launch_description():
     simulator_bringup_launch_path = os.path.join(
         get_package_share_directory('autodrive_f1tenth'),  # Replace with your simulator package name
         'launch',
-        'simulator_bringup_headless.launch.py'
+        # 'simulator_bringup_headless.launch.py'
+        'simulator_bringup_rviz.launch.py'
     )
     
     return LaunchDescription([
@@ -76,6 +77,13 @@ def generate_launch_description():
                     'rear_right_wheel',
                 ]
             }]
+        ),
+        Node(
+            package='autodrive_iros_2024',
+            executable='ackermann_odometry',
+            name='ackermann_odometry',
+            parameters=[],
+            output='screen'
         ),
 
         # Include the simulator bringup launch file

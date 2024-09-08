@@ -35,8 +35,17 @@ target_include_directories(
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+add_executable(ackermann_odometry src/ackermann_odometry.cpp)
+ament_target_dependencies(ackermann_odometry rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+
+target_include_directories(
+  ackermann_odometry PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
 install(TARGETS 
   frame_republisher
+  ackermann_odometry
   DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch/

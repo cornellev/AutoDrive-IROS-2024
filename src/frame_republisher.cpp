@@ -11,25 +11,25 @@ class FrameRepublisher : public rclcpp::Node
 public:
     FrameRepublisher() : Node("frame_republisher")
     {
-        // Declare a list of frames to subscribe to
+        // Get the list of frames to republish
         this->declare_parameter<std::vector<std::string>>("frames", std::vector<std::string>{});
         this->get_parameter("frames", frames_);
 
-        // Initialize the TF listener and broadcaster
+        // Initialize TF listener and broadcaster
         tf_buffer_ = std::make_shared<tf2_ros::Buffer>(this->get_clock());
         tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
         tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
 
-        // Set the timer to periodically republish the frames
+        // Set timer to periodically republish the frames
         timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(10),
+            std::chrono::milliseconds(10),  // 100 Hz
             std::bind(&FrameRepublisher::republishFrames, this));
     }
 
 private:
     void republishFrames()
     {
-        for (const auto &frame : frames_)
+        for (const auto &frame : frames_)  // Transform every frame in the list
         {
             try
             {

@@ -81,15 +81,22 @@ ekf_filter_node:
     imu0_differential: false
     imu0_relative: true
     imu0_queue_size: 5
-    imu0_pose_rejection_threshold: 0.8                 # Note the difference in parameter names
-    imu0_twist_rejection_threshold: 0.8                #
-    imu0_linear_acceleration_rejection_threshold: 0.8  #
+    imu0_pose_rejection_threshold: 2.0          
+    imu0_twist_rejection_threshold: 2.0   
+    imu0_linear_acceleration_rejection_threshold: 2.0
     imu0_two_d_mode: true
+    imu0_remove_gravitational_acceleration: false
 
-    # # [ADVANCED] Some IMUs automatically remove acceleration due to gravity, and others don't. If yours doesn't, please set
-    # # this to true, and *make sure* your data conforms to REP-103, specifically, that the data is in ENU frame.
-    imu0_remove_gravitational_acceleration: true
-
-    # # Frame settings for the IMU
-    # imu0_frame: imu_link          # The frame in which the IMU data is reported
-    # imu0_base_link_frame: base_link  # The base link frame relative to which the IMU measurements are reported
+    odom0: /wheel_odom
+    odom0_config: [true,  true,  false,
+                   false, false, true,
+                   false, false, false,
+                   false, false, false,
+                   false, false, false]
+    odom0_difference: false
+    odom0_relative: true
+    odom0_queue_size: 5
+    odom0_pose_rejection_threshold: 3.0
+    odom0_twist_rejection_threshold: 3.0
+    odom0_linear_acceleration_rejection_threshold: 2.0
+    odom0_two_d_mode: true
