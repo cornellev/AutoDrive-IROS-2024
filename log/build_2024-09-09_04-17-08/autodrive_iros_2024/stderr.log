@@ -1,0 +1,17 @@
+[01m[K/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/src/ackermann_odometry.cpp:[m[K In member function ‘[01m[Kvoid AckermannOdometry::computeOdometry()[m[K’:
+[01m[K/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/src/ackermann_odometry.cpp:138:42:[m[K [01;31m[Kerror: [m[Kno match for ‘[01m[Koperator=[m[K’ (operand types are ‘[01m[Kgeometry_msgs::msg::PoseWithCovariance_<std::allocator<void> >::_pose_type[m[K’ {aka ‘[01m[Kgeometry_msgs::msg::Pose_<std::allocator<void> >[m[K’} and ‘[01m[Kgeometry_msgs::msg::Quaternion[m[K’ {aka ‘[01m[Kgeometry_msgs::msg::Quaternion_<std::allocator<void> >[m[K’})
+  138 |         odom_msg.pose.pose = tf2::toMsg(q[01;31m[K)[m[K;
+      |                                          [01;31m[K^[m[K
+In file included from [01m[K/opt/ros/foxy/include/geometry_msgs/msg/detail/pose_with_covariance__struct.hpp:19[m[K,
+                 from [01m[K/opt/ros/foxy/include/nav_msgs/msg/detail/odometry__struct.hpp:21[m[K,
+                 from [01m[K/opt/ros/foxy/include/nav_msgs/msg/odometry.hpp:7[m[K,
+                 from [01m[K/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/src/ackermann_odometry.cpp:4[m[K:
+[01m[K/opt/ros/foxy/include/geometry_msgs/msg/detail/pose__struct.hpp:37:8:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr geometry_msgs::msg::Pose_<std::allocator<void> >& geometry_msgs::msg::Pose_<std::allocator<void> >::operator=(const geometry_msgs::msg::Pose_<std::allocator<void> >&)[m[K’
+   37 | struct [01;36m[KPose_[m[K
+      |        [01;36m[K^~~~~[m[K
+[01m[K/opt/ros/foxy/include/geometry_msgs/msg/detail/pose__struct.hpp:37:8:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Kgeometry_msgs::msg::Quaternion[m[K’ {aka ‘[01m[Kgeometry_msgs::msg::Quaternion_<std::allocator<void> >[m[K’} to ‘[01m[Kconst geometry_msgs::msg::Pose_<std::allocator<void> >&[m[K’
+[01m[K/opt/ros/foxy/include/geometry_msgs/msg/detail/pose__struct.hpp:37:8:[m[K [01;36m[Knote: [m[Kcandidate: ‘[01m[Kconstexpr geometry_msgs::msg::Pose_<std::allocator<void> >& geometry_msgs::msg::Pose_<std::allocator<void> >::operator=(geometry_msgs::msg::Pose_<std::allocator<void> >&&)[m[K’
+[01m[K/opt/ros/foxy/include/geometry_msgs/msg/detail/pose__struct.hpp:37:8:[m[K [01;36m[Knote: [m[K  no known conversion for argument 1 from ‘[01m[Kgeometry_msgs::msg::Quaternion[m[K’ {aka ‘[01m[Kgeometry_msgs::msg::Quaternion_<std::allocator<void> >[m[K’} to ‘[01m[Kgeometry_msgs::msg::Pose_<std::allocator<void> >&&[m[K’
+make[2]: *** [CMakeFiles/ackermann_odometry.dir/build.make:63: CMakeFiles/ackermann_odometry.dir/src/ackermann_odometry.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:107: CMakeFiles/ackermann_odometry.dir/all] Error 2
+make: *** [Makefile:141: all] Error 2
