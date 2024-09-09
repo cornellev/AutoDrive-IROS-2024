@@ -1,3 +1,0 @@
-[35m[1mScanning dependencies of target ackermann_odometry[0m
-[ 50%] Built target frame_republisher
-[ 75%] [32mBuilding CXX object CMakeFiles/ackermann_odometry.dir/src/ackermann_odometry.cpp.o[0m
