@@ -13,7 +13,7 @@ class AckermannOdometry : public rclcpp::Node
 public:
     AckermannOdometry() : Node("ackermann_odometry")
     {
-        RCLCPP_INFO(this->get_logger(), "mewmewmewmewmewmewmewmew");
+        RCLCPP_INFO(this->get_logger(), "Initializing Ackermann Odometry Node");
 
         // Parameters
         wheelbase_ = 0.3240;
@@ -45,14 +45,13 @@ public:
 private:
     void leftEncoderCallback(const sensor_msgs::msg::JointState::SharedPtr msg)
     {
-        // PRINT "HERE"
         if (!left_encoder_initialized_)
         {
             initial_left_encoder_ = encoderToRotations(msg->position[0]);
             left_encoder_initialized_ = true;
         }
 
-        left_encoder_ = encoderToRotations(msg->position[0]) - initial_left_encoder_;
+        left_encoder_rotations_ = encoderToRotations(msg->position[0]) - initial_left_encoder_;
         computeOdometry();
     }
 
@@ -64,7 +63,7 @@ private:
             right_encoder_initialized_ = true;
         }
 
-        right_encoder_ = encoderToRotations(msg->position[0]) - initial_right_encoder_;
+        right_encoder_rotations_ = encoderToRotations(msg->position[0]) - initial_right_encoder_;
         computeOdometry();
     }
 
@@ -85,14 +84,40 @@ private:
         double dt = (current_time - prev_time_).seconds();
         if (dt < 1e-6) return; // Avoid division by zero
 
-        if (fabs(left_encoder_ - prev_left_encoder_) < 1e-6 || fabs(right_encoder_ - prev_right_encoder_) < 1e-6)
+        if (fabs(left_encoder_rotations_ - prev_left_encoder_rotations_) < 1e-6 || fabs(right_encoder_rotations_ - prev_right_encoder_rotations_) < 1e-6)
         {
-            return; // Only calculate when both encoders have updated
+            // Publish with zero velocity but correct position and orientation
+            auto odom_msg = nav_msgs::msg::Odometry();
+
+            odom_msg.header.stamp = current_time;
+            odom_msg.header.frame_id = "odom";
+            odom_msg.child_frame_id = "base_link";
+
+            // Set the position
+            odom_msg.pose.pose.position.x = x_;
+            odom_msg.pose.pose.position.y = y_;
+            odom_msg.pose.pose.position.z = 0.0;
+
+            // Set the velocity
+            odom_msg.twist.twist.linear.x = 0.0;
+            odom_msg.twist.twist.angular.z = 0.0;
+
+            // Set the orientation
+            tf2::Quaternion q;
+            q.setRPY(0.0, 0.0, current_orientation_);
+            odom_msg.pose.pose.orientation.x = q.x();
+            odom_msg.pose.pose.orientation.y = q.y();
+            odom_msg.pose.pose.orientation.z = q.z();
+            odom_msg.pose.pose.orientation.w = q.w();
+
+            // Publish the message
+            odom_publisher_->publish(odom_msg);
+            return;
         }
 
         // Calculate distance traveled by each wheel (based on encoder values)
-        double delta_left = (left_encoder_ - prev_left_encoder_) * wheel_radius_;
-        double delta_right = (right_encoder_ - prev_right_encoder_) * wheel_radius_;
+        double delta_left = (left_encoder_rotations_ - prev_left_encoder_rotations_) * wheel_radius_;
+        double delta_right = (right_encoder_rotations_ - prev_right_encoder_rotations_) * wheel_radius_;
         
         // Calculate the average distance the vehicle has traveled
         double delta_distance = (delta_left + delta_right) / 2.0;
@@ -115,8 +140,8 @@ private:
         y_ += delta_y;
 
         // Update previous encoder values and time for next iteration
-        prev_left_encoder_ = left_encoder_;
-        prev_right_encoder_ = right_encoder_;
+        prev_left_encoder_rotations_ = left_encoder_rotations_;
+        prev_right_encoder_rotations_ = right_encoder_rotations_;
         prev_time_ = current_time;
 
         // Publish the odometry message
@@ -130,6 +155,10 @@ private:
         odom_msg.pose.pose.position.x = x_;
         odom_msg.pose.pose.position.y = y_;
         odom_msg.pose.pose.position.z = 0.0;
+
+        // Set the velocity
+        odom_msg.twist.twist.linear.x = delta_distance / dt;
+        // odom_msg.twist.twist.angular.z = delta_theta / dt;
 
         // Set the orientation
         tf2::Quaternion q;
@@ -157,10 +186,10 @@ private:
     double track_width_;
     double wheel_radius_;
     double encoder_ticks_per_rotation_;
-    double prev_left_encoder_ = 0.0;
-    double prev_right_encoder_ = 0.0;
-    double left_encoder_ = 0.0;
-    double right_encoder_ = 0.0;
+    double prev_left_encoder_rotations_ = 0.0;
+    double prev_right_encoder_rotations_ = 0.0;
+    double left_encoder_rotations_ = 0.0;
+    double right_encoder_rotations_ = 0.0;
     double steering_angle_ = 0.0;
     double x_ = 0.0;
     double y_ = 0.0;

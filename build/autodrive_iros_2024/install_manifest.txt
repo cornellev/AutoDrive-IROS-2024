@@ -1,5 +1,11 @@
-/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/hello
+/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/frame_republisher
+/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/lib/autodrive_iros_2024/ackermann_odometry
+/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch/test_bed.yaml
 /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch/test_bed.py
+/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch/launch.py
+/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/launch/test_bed.xml
+/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/config/robot_localization.yaml
+/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/config/slam_toolbox.yaml
 /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/package_run_dependencies/autodrive_iros_2024
 /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/ament_index/resource_index/parent_prefix_path/autodrive_iros_2024
 /home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024/install/autodrive_iros_2024/share/autodrive_iros_2024/environment/ament_prefix_path.sh

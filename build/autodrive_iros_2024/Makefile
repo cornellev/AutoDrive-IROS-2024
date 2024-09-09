@@ -168,6 +168,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named frame_republisher
+
+# Build rule for target.
+frame_republisher: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 frame_republisher
+.PHONY : frame_republisher
+
+# fast build rule for target.
+frame_republisher/fast:
+	$(MAKE) -f CMakeFiles/frame_republisher.dir/build.make CMakeFiles/frame_republisher.dir/build
+.PHONY : frame_republisher/fast
+
+#=============================================================================
+# Target rules for targets named ackermann_odometry
+
+# Build rule for target.
+ackermann_odometry: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 ackermann_odometry
+.PHONY : ackermann_odometry
+
+# fast build rule for target.
+ackermann_odometry/fast:
+	$(MAKE) -f CMakeFiles/ackermann_odometry.dir/build.make CMakeFiles/ackermann_odometry.dir/build
+.PHONY : ackermann_odometry/fast
+
+#=============================================================================
 # Target rules for targets named autodrive_iros_2024_uninstall
 
 # Build rule for target.
@@ -179,19 +205,6 @@ autodrive_iros_2024_uninstall: cmake_check_build_system
 autodrive_iros_2024_uninstall/fast:
 	$(MAKE) -f CMakeFiles/autodrive_iros_2024_uninstall.dir/build.make CMakeFiles/autodrive_iros_2024_uninstall.dir/build
 .PHONY : autodrive_iros_2024_uninstall/fast
-
-#=============================================================================
-# Target rules for targets named hello
-
-# Build rule for target.
-hello: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 hello
-.PHONY : hello
-
-# fast build rule for target.
-hello/fast:
-	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/build
-.PHONY : hello/fast
 
 #=============================================================================
 # Target rules for targets named uninstall
@@ -206,32 +219,59 @@ uninstall/fast:
 	$(MAKE) -f CMakeFiles/uninstall.dir/build.make CMakeFiles/uninstall.dir/build
 .PHONY : uninstall/fast
 
-src/hello.o: src/hello.cpp.o
+src/ackermann_odometry.o: src/ackermann_odometry.cpp.o
 
-.PHONY : src/hello.o
+.PHONY : src/ackermann_odometry.o
 
 # target to build an object file
-src/hello.cpp.o:
-	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/src/hello.cpp.o
-.PHONY : src/hello.cpp.o
+src/ackermann_odometry.cpp.o:
+	$(MAKE) -f CMakeFiles/ackermann_odometry.dir/build.make CMakeFiles/ackermann_odometry.dir/src/ackermann_odometry.cpp.o
+.PHONY : src/ackermann_odometry.cpp.o
 
-src/hello.i: src/hello.cpp.i
+src/ackermann_odometry.i: src/ackermann_odometry.cpp.i
 
-.PHONY : src/hello.i
+.PHONY : src/ackermann_odometry.i
 
 # target to preprocess a source file
-src/hello.cpp.i:
-	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/src/hello.cpp.i
-.PHONY : src/hello.cpp.i
+src/ackermann_odometry.cpp.i:
+	$(MAKE) -f CMakeFiles/ackermann_odometry.dir/build.make CMakeFiles/ackermann_odometry.dir/src/ackermann_odometry.cpp.i
+.PHONY : src/ackermann_odometry.cpp.i
 
-src/hello.s: src/hello.cpp.s
+src/ackermann_odometry.s: src/ackermann_odometry.cpp.s
 
-.PHONY : src/hello.s
+.PHONY : src/ackermann_odometry.s
 
 # target to generate assembly for a file
-src/hello.cpp.s:
-	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/src/hello.cpp.s
-.PHONY : src/hello.cpp.s
+src/ackermann_odometry.cpp.s:
+	$(MAKE) -f CMakeFiles/ackermann_odometry.dir/build.make CMakeFiles/ackermann_odometry.dir/src/ackermann_odometry.cpp.s
+.PHONY : src/ackermann_odometry.cpp.s
+
+src/frame_republisher.o: src/frame_republisher.cpp.o
+
+.PHONY : src/frame_republisher.o
+
+# target to build an object file
+src/frame_republisher.cpp.o:
+	$(MAKE) -f CMakeFiles/frame_republisher.dir/build.make CMakeFiles/frame_republisher.dir/src/frame_republisher.cpp.o
+.PHONY : src/frame_republisher.cpp.o
+
+src/frame_republisher.i: src/frame_republisher.cpp.i
+
+.PHONY : src/frame_republisher.i
+
+# target to preprocess a source file
+src/frame_republisher.cpp.i:
+	$(MAKE) -f CMakeFiles/frame_republisher.dir/build.make CMakeFiles/frame_republisher.dir/src/frame_republisher.cpp.i
+.PHONY : src/frame_republisher.cpp.i
+
+src/frame_republisher.s: src/frame_republisher.cpp.s
+
+.PHONY : src/frame_republisher.s
+
+# target to generate assembly for a file
+src/frame_republisher.cpp.s:
+	$(MAKE) -f CMakeFiles/frame_republisher.dir/build.make CMakeFiles/frame_republisher.dir/src/frame_republisher.cpp.s
+.PHONY : src/frame_republisher.cpp.s
 
 # Help Target
 help:
@@ -246,12 +286,16 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... test"
+	@echo "... frame_republisher"
+	@echo "... ackermann_odometry"
 	@echo "... autodrive_iros_2024_uninstall"
-	@echo "... hello"
 	@echo "... uninstall"
-	@echo "... src/hello.o"
-	@echo "... src/hello.i"
-	@echo "... src/hello.s"
+	@echo "... src/ackermann_odometry.o"
+	@echo "... src/ackermann_odometry.i"
+	@echo "... src/ackermann_odometry.s"
+	@echo "... src/frame_republisher.o"
+	@echo "... src/frame_republisher.i"
+	@echo "... src/frame_republisher.s"
 .PHONY : help
 
 
