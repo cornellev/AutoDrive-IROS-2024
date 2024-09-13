@@ -43,9 +43,18 @@ target_include_directories(
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+add_executable(sensor_republisher src/sensor_republisher.cpp)
+ament_target_dependencies(sensor_republisher rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+
+target_include_directories(
+  sensor_republisher PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
 install(TARGETS 
   frame_republisher
   ackermann_odometry
+  sensor_republisher
   DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY launch/
