@@ -34,7 +34,8 @@ def generate_launch_description():
     }
     
     remappings=[
-          ('scan', '/autodrive/f1tenth_1/lidar')]
+          ('scan', '/autodrive/f1tenth_1/lidar'),
+          ('odom', '/odometry/filtered')]
 
 
     ### AutoDrive simulator setup ### 
@@ -57,7 +58,7 @@ def generate_launch_description():
         ### ARGUMENTS ###
 
         DeclareLaunchArgument(
-            'use_sim_time', default_value='true',
+            'use_sim_time', default_value='false',
             description='Use simulation (Gazebo) clock if true'),
         
         DeclareLaunchArgument(
