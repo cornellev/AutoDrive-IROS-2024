@@ -17,13 +17,12 @@ def generate_launch_description():
     localization = LaunchConfiguration('localization')
     
     parameters={
-          'frame_id':'base_footprint',
+          'frame_id':'base_link',
           'use_sim_time':use_sim_time,
           'subscribe_depth':False,
           'subscribe_rgb':False,
           'subscribe_scan':True, # only use lidar for now
           'approx_sync':True,
-          'use_action_for_goal':True,
           'qos_scan':qos,
           'qos_imu':qos,
           'Reg/Strategy':'1',
@@ -34,7 +33,7 @@ def generate_launch_description():
     }
     
     remappings=[
-          ('scan', '/autodrive/f1tenth_1/lidar'),
+          ('scan', '/lidar'),
           ('odom', '/odometry/filtered')]
 
 
@@ -58,7 +57,7 @@ def generate_launch_description():
         ### ARGUMENTS ###
 
         DeclareLaunchArgument(
-            'use_sim_time', default_value='false',
+            'use_sim_time', default_value='true', # I give up 
             description='Use simulation (Gazebo) clock if true'),
         
         DeclareLaunchArgument(
@@ -98,6 +97,13 @@ def generate_launch_description():
             output='screen'
         ),
 
+        Node(
+            package='autodrive_iros_2024',
+            executable='sensor_republisher',
+            name='sensor_republisher',
+            output='screen'
+        ),
+
         #### NODES ####
 
         # robot_localization ekf_node
@@ -119,7 +125,7 @@ def generate_launch_description():
                     'left_encoder',
                     'right_encoder',
                     'imu',
-                    'lidar',
+                    # 'lidar',
                     'front_camera',
                     'front_left_wheel',
                     'front_right_wheel',
