@@ -34,7 +34,7 @@ def generate_launch_description():
     }
     
     remappings=[
-          ('scan', '/scan')]
+          ('scan', '/autodrive/f1tenth_1/lidar')]
 
 
     ### AutoDrive simulator setup ### 
