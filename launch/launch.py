@@ -18,7 +18,10 @@ def generate_launch_description():
     
     parameters={
           'frame_id':'base_link',
+          'map_frame_id':'world',
+          'odom_frame_id': 'odom',
           'use_sim_time':use_sim_time,
+          'visual_odom': False,
           'subscribe_depth':False,
           'subscribe_rgb':False,
           'subscribe_scan':True, # only use lidar for now
@@ -34,7 +37,8 @@ def generate_launch_description():
     
     remappings=[
           ('scan', '/lidar'),
-          ('odom', '/odometry/filtered')]
+          #('odom', '/wheel_odom')
+          ]
 
 
     ### AutoDrive simulator setup ### 
@@ -70,32 +74,32 @@ def generate_launch_description():
 
         ### TRANSFORMS ###
 
-        # Static Transform: world -> map
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_world_to_map',
-            arguments=['0', '0', '0', '0', '0', '0', 'world', 'map'],
-            output='screen'
-        ),
+        # Static Transform: world -> odom
+        # Node(
+        #     package='tf2_ros',
+        #     executable='static_transform_publisher',
+        #     name='static_world_to_odom',
+        #     arguments=['0', '0', '0', '0', '0', '0', 'world', 'odom'],
+        #     output='screen'
+        # ),
 
         # Static Transform: map -> odom
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_map_to_odom',
-            arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom'],
-            output='screen'
-        ),
+        # Node(
+        #     package='tf2_ros',
+        #     executable='static_transform_publisher',
+        #     name='static_map_to_odom',
+        #     arguments=['0', '0', '0', '0', '0', '0', 'map', 'odom'],
+        #     output='screen'
+        # ),
 
         # Static Transform: odom -> base_link
-        Node(
-            package='tf2_ros',
-            executable='static_transform_publisher',
-            name='static_odom_to_base_link',
-            arguments=['0', '0', '0', '0', '0', '0', 'odom', 'base_link'],
-            output='screen'
-        ),
+        # Node(
+        #     package='tf2_ros',
+        #     executable='static_transform_publisher',
+        #     name='static_odom_to_base_link',
+        #     arguments=['0', '0', '0', '0', '0', '0', 'odom', 'base_link'],
+        #     output='screen'
+        # ),
 
         Node(
             package='autodrive_iros_2024',
