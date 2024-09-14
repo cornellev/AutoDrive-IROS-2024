@@ -12,43 +12,84 @@ class SpeedController : public rclcpp::Node
 public:
     SpeedController() : Node("speed_controller")
     {
-        odom_sub_.subscribe(this, "/odometry/filtered");
-        target_sub_.subscribe(this, "/target_velocity");
+        auto odom_topic = this->declare_parameter<std::string>("odom_topic", "/odometry/filtered");
+        auto target_topic = this->declare_parameter<std::string>("target_topic", "/target_velocity");
+        auto throttle_topic = this->declare_parameter<std::string>("throttle_topic", "/autodrive/f1tenth_1/throttle_command");
 
-        ts_ = std::make_shared<message_filters::Synchronizer<sync_policy>>(odom_sub_, target_sub_, 10);
-        ts_->registerCallback(std::bind(&SpeedController::callback, this, std::placeholders::_1, std::placeholders::_2));
+        auto keep_last = rclcpp::QoS(rclcpp::KeepLast(1));
 
-        publisher_ = this->create_publisher<std_msgs::msg::Float32>(
-            "/autodrive/f1tenth_1/throttle",
-            10
+        odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
+            odom_topic,
+            keep_last,
+            std::bind(&SpeedController::feedback_callback, this, std::placeholders::_1)
         );
 
+        target_sub_ = this->create_subscription<std_msgs::msg::Float32>(
+            target_topic,
+            keep_last,
+            std::bind(&SpeedController::target_callback, this, std::placeholders::_1)
+        );
+
+        publisher_ = this->create_publisher<std_msgs::msg::Float32>(
+            throttle_topic,
+            keep_last
+        );
+
+        base_link_frame_ = this->declare_parameter<std::string>("base_link_frame", "base_link");
+
         // TODO: dynamic reconfigure
-        pid_ = control_toolbox::Pid(1, 0, 1);
+        auto p = this->declare_parameter<double>("p", 0.1);
+        auto i = this->declare_parameter<double>("i", 0);
+        auto d = this->declare_parameter<double>("d", 0);
+        pid_ = control_toolbox::Pid(p, i, d);
+
+        RCLCPP_INFO(this->get_logger(), "Started actuator controller.");
     }
 
 private:
-    void callback(const nav_msgs::msg::Odometry::ConstPtr odom, const std_msgs::msg::Float32::ConstPtr target)
+    void feedback_callback(const nav_msgs::msg::Odometry::ConstSharedPtr odom)
     {
-        // TODO: use transform to avoid this, also take base link as parameter
-        assert(odom->child_frame_id == "base_link");
+        // hard to transform velocities so we're settling for this
+        assert(odom->child_frame_id == base_link_frame_);
 
-        if (!last_time.has_value()) return;
+        rclcpp::Time current(odom->header.stamp);
 
-        rclcpp::Duration dt = rclcpp::Time(odom->header.stamp) - last_time.value();
-        double error = target->data - odom->twist.twist.linear.x;
+        if (!last_time.has_value()) {
+            last_time = current;
+            return;
+        }
 
+        rclcpp::Duration dt = current - last_time.value();
+        last_time = current;
+
+        // no multithreading
+        double error = target_speed_ - odom->twist.twist.linear.x;
         double command = pid_.computeCommand(error, dt.nanoseconds());
-        publisher_->publish(command);
+
+        std_msgs::msg::Float32 msg;
+        msg.data = command;
+        publisher_->publish(msg);
+        RCLCPP_INFO(this->get_logger(), 
+            "Published throttle %f. Target: %f. Actual: %f. Error %f.", 
+            msg.data, target_speed_, odom->twist.twist.linear.y, error
+        );
     }
 
-    typedef message_filters::sync_policies::ApproximateTime<nav_msgs::msg::Odometry, std_msgs::msg::Float32> sync_policy;
+    void target_callback(const std_msgs::msg::Float32::ConstSharedPtr target) 
+    {
+        // no multithreading
+        target_speed_ = target->data;
+        RCLCPP_INFO(this->get_logger(), "Got target %f", target->data);
+    }
 
-    message_filters::Subscriber<nav_msgs::msg::Odometry> odom_sub_;
-    message_filters::Subscriber<std_msgs::msg::Float32> target_sub_;
-    std::shared_ptr<message_filters::Synchronizer<sync_policy>> ts_;
+    float target_speed_ = 0.0;
 
+    rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
+    rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr target_sub_;
     rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr publisher_;
+
+    std::string base_link_frame_;
+
     control_toolbox::Pid pid_;
 
     std::optional<rclcpp::Time> last_time;

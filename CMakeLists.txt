@@ -26,10 +26,11 @@ find_package(sensor_msgs REQUIRED)
 find_package(slam_toolbox REQUIRED)
 find_package(robot_localization REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(control_toolbox REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 add_executable(frame_republisher src/frame_republisher.cpp)
 ament_target_dependencies(frame_republisher rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
-# ament_target_dependencies(hello rclcpp std_msgs sensor_msgs)
 target_include_directories(
   frame_republisher PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -37,7 +38,6 @@ target_include_directories(
 
 add_executable(ackermann_odometry src/ackermann_odometry.cpp)
 ament_target_dependencies(ackermann_odometry rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
-
 target_include_directories(
   ackermann_odometry PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -50,7 +50,6 @@ target_include_directories(actuator_control PUBLIC
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS 
-  hello
   actuator_control
   frame_republisher
   ackermann_odometry

@@ -173,7 +173,7 @@ private:
         
 
         // Print the odometry
-        RCLCPP_INFO(this->get_logger(), "x=%f, y=%f, theta=%f", x_, y_, current_orientation_);
+        RCLCPP_DEBUG(this->get_logger(), "x=%f, y=%f, theta=%f", x_, y_, current_orientation_);
     }
 
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;

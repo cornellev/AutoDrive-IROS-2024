@@ -1,0 +1,8 @@
+actuator_control:
+  ros__parameters:
+    odom_topic: /odometry/filtered
+    target_topic: /target_velocity
+    throttle_topic: /autodrive/f1tenth_1/throttle_command
+    p: 0.1
+    i: 0
+    d: 0

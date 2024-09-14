@@ -7,6 +7,9 @@
         "/home/autodrive_devkit/ros2_ws/install/autodrive_f1tenth/lib/python3.8/site-packages",
         "/opt/ros/foxy/lib/python3.8/site-packages"
     ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
     "files.associations": {
         "cctype": "cpp",
         "clocale": "cpp",
