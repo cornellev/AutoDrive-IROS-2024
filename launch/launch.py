@@ -85,6 +85,13 @@ def generate_launch_description():
             parameters=[],
             output='screen'
         ),
+        Node(
+            package='autodrive_iros_2024',
+            executable='trajectory_follower',
+            name='trajectory_follower',
+            parameters=[],
+            output='screen'
+        ),
 
         # Include the simulator bringup launch file
         IncludeLaunchDescription(
