@@ -8,6 +8,8 @@
         "/opt/ros/foxy/lib/python3.8/site-packages"
     ],
     "files.associations": {
-        "random": "cpp"
+        "random": "cpp",
+        "array": "cpp",
+        "chrono": "cpp"
     }
 }
