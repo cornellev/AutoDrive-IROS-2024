@@ -29,7 +29,7 @@ private:
 
         // Publish throttle command
         auto throttle_msg = std_msgs::msg::Float32();
-        throttle_msg.data = calculateThrottle(.6);
+        throttle_msg.data = calculateThrottle(.4);
         throttle_pub_->publish(throttle_msg);
 
         // Publish steering command
@@ -50,7 +50,9 @@ private:
 
         // float minimum_angle = .340 // 20 degrees
 
-        float min_range = -1.22;
+        lidar_received = true;
+
+        float min_range = -1.5;
         // float max_range = .52; // 30 degrees
 
         float scan_angle_min = msg->angle_min;
@@ -82,17 +84,14 @@ private:
 
 
             if (
-                (msg->ranges[i] > farthest_range) ||
-                (
-                    (
-                        fabs(msg->ranges[i] - farthest_range) < .1
-                    ) &&
-                    (fabs(i - center_index) < fabs(farthest_angle - center_index))
-                )
+                (msg->ranges[i] > farthest_range)
             )    
             {
-                farthest_angle = i;
-                farthest_range = msg->ranges[i];
+                // if (msg->ranges[i] - farthest_range > .3 || abs(i - center_index) < abs(farthest_angle - center_index))
+                {
+                    farthest_angle = i;
+                    farthest_range = msg->ranges[i];
+                }
             }
         }
 
@@ -105,10 +104,24 @@ private:
             s = msg->range_max;
         }
 
-        float steering_angle = atan(3 * wheel_base * sin(real_angle) / s);
+        // s = s * 1. / 3.;
 
-        RCLCPP_INFO(this->get_logger(), "FARTHEST INDEX: %d, %f", farthest_angle, farthest_range);
-        RCLCPP_INFO(this->get_logger(), "STEERING ANGLE: %f", steering_angle);
+        float steering_angle = atan(2 * wheel_base * sin(real_angle) / s);
+
+        // if (steering_angle > targeted_steering_angle) {
+        //     targeted_steering_angle = std::min(
+        //         targeted_steering_angle + .05, 
+        //         steering_angle
+        //     );
+        // } else {
+        //     targeted_steering_angle = std::max(
+        //         targeted_steering_angle - .05, 
+        //         steering_angle
+        //     );
+        // }
+
+        // RCLCPP_INFO(this->get_logger(), "FARTHEST INDEX: %d, %f", farthest_angle, farthest_range);
+        // RCLCPP_INFO(this->get_logger(), "STEERING ANGLE: %f", steering_angle);
 
 
 
@@ -119,6 +132,11 @@ private:
 
         // Print the range at the center of the scan
         // RCLCPP_INFO(this->get_logger(), "Center range: %f", msg->ranges[msg->ranges.size() / 2]);
+        // targeted_steering_angle = steering_angle;
+
+        targeted_steering_angle = real_angle;
+
+        lidar_msg_ = *msg;
     }
 
     void saveCurrentOdom(const nav_msgs::msg::Odometry::SharedPtr msg)
@@ -140,7 +158,59 @@ private:
 
     float calculateSteeringAngle()
     {
-        return 0.0;
+        if (!lidar_received)
+        {
+            return 0.0;
+        }
+
+        // Based on the lidar min and angle increment, find the value at straight left
+        float min_angle = lidar_msg_.angle_min;
+        float angle_increment = lidar_msg_.angle_increment;
+
+        float dist_left = std::min(
+            lidar_msg_.ranges[(M_PI / 4 - min_angle) / angle_increment],
+            lidar_msg_.ranges[(M_PI / 3 - min_angle) / angle_increment]
+        );
+
+        dist_left = std::min(
+            dist_left,
+            lidar_msg_.ranges[(M_PI / 2 - min_angle) / angle_increment]
+        );
+
+        float dist_right = std::min(
+            lidar_msg_.ranges[(-M_PI / 4 - min_angle) / angle_increment],
+            lidar_msg_.ranges[(-M_PI / 3 - min_angle) / angle_increment]
+        );
+
+        dist_right = std::min(
+            dist_right,
+            lidar_msg_.ranges[(-M_PI / 2 - min_angle) / angle_increment]
+        );
+
+        // Want range at -pi/2 degrees
+        // int index_left = (M_PI / 4 - min_angle) / angle_increment;
+
+        // float dist_left = lidar_msg_.ranges[index_left];
+
+        // // Want range at pi/2 degrees
+        // int index_right = (-M_PI / 4 - min_angle) / angle_increment;
+
+        // float dist_right = lidar_msg_.ranges[index_right];
+
+        // float emergency_threshold = .1;
+
+        // if (dist_left < emergency_threshold) {
+        //     return -.3;
+        // }
+
+        // if (dist_right < emergency_threshold) {
+        //     return .3;
+        // }
+
+        float new_steering_angle = targeted_steering_angle - .2/(dist_left) + .2/(dist_right);
+
+
+        return new_steering_angle;
     }
 
     float PIDController(float error)
@@ -181,6 +251,9 @@ private:
 
     nav_msgs::msg::Odometry odom_msg_;
 
+    sensor_msgs::msg::LaserScan lidar_msg_;
+    bool lidar_received = false;
+
     // PID controller velocity
     float kP = 0.1;
     float kI = 0.0;
@@ -192,6 +265,11 @@ private:
     float prev_time = -1.0; // Initialize to -1 to indicate first iteration
 
     float wheel_base = .324; // m
+
+    float targeted_steering_angle = 0.0;
+
+    float last_steering_angle_time = -1.0;
+    float last_steering_angle = 0.0;
 
     rclcpp::TimerBase::SharedPtr timer_;
 };
