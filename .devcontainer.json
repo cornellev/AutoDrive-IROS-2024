@@ -1,37 +1,27 @@
 {
-    "name": "AutoDRIVE DevKit",
-    "build": {
-        "dockerfile": "Dockerfile.dev"
-    },
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024,type=bind",
-    "workspaceFolder": "/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024",
-    "runArgs": [
-        "--rm",
-        "--network=host",
-        "--ipc=host",
-        "--privileged"
-    ],
-    "containerEnv": {
-        "DISPLAY": "host.docker.internal:0"
-    },
-    "mounts": [
-        "source=C:\\Program Files (x86)\\Xming,target=/tmp/.X11-unix,type=bind,consistency=cached"
-    ],
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "terminal.integrated.defaultProfile.linux": "bash",
-                "terminal.integrated.profiles.linux": {
-                    "bash": {
-                        "path": "/bin/bash"
-                    }
-                }
-            },
-            "extensions": [
-                "ms-iot.vscode-ros",
-                "ms-vscode.cpptools-extension-pack"
-            ]
+  "name": "AutoDRIVE DevKit",
+  "build": {
+    "dockerfile": "Dockerfile.dev"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024,type=bind",
+  "workspaceFolder": "/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024",
+  "runArgs": ["--rm", "--platform=linux/amd64", "--network=host", "--ipc=host", "--privileged"],
+  "containerEnv": {
+    "DISPLAY": "host.docker.internal:0"
+  },
+  "mounts": ["source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached"],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash"
+          }
         }
-    },
-    "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+      },
+      "extensions": ["ms-iot.vscode-ros", "ms-vscode.cpptools-extension-pack"]
+    }
+  },
+  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
 }
