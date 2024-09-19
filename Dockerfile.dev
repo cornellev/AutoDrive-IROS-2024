@@ -60,6 +60,10 @@ RUN wget ${devkit_url} -O ros2_ws/src/autodrive_devkit.zip
 RUN unzip ros2_ws/src/autodrive_devkit.zip -d ros2_ws/src/autodrive_devkit
 RUN rm ros2_ws/src/autodrive_devkit.zip
 
+# Download gmapping
+RUN git clone https://github.com/Project-MANAS/slam_gmapping.git
+RUN mv slam_gmapping ros2_ws/src/
+
 # Build so workspace is ready
 RUN source /opt/ros/foxy/setup.bash \
     && cd ros2_ws \
