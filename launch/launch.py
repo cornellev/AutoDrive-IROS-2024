@@ -16,8 +16,8 @@ def generate_launch_description():
     simulator_bringup_launch_path = os.path.join(
         get_package_share_directory('autodrive_f1tenth'),  # Replace with your simulator package name
         'launch',
-        'simulator_bringup_headless.launch.py'
-        # 'simulator_bringup_rviz.launch.py'
+        # 'simulator_bringup_headless.launch.py'
+        'simulator_bringup_rviz.launch.py'
     )
     
     return LaunchDescription([
@@ -89,6 +89,15 @@ def generate_launch_description():
             package='autodrive_iros_2024',
             executable='trajectory_follower',
             name='trajectory_follower',
+            parameters=[],
+            output='screen'
+        ),
+
+        # SLAM
+        Node(
+            package='slam_gmapping',
+            executable='slam_gmapping',
+            name='slam_gmapping',
             parameters=[],
             output='screen'
         ),
