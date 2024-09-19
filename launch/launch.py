@@ -93,12 +93,23 @@ def generate_launch_description():
             output='screen'
         ),
 
+        Node(
+            package='autodrive_iros_2024',
+            executable='sensor_republisher',
+            name='sensor_republisher',
+            output='screen'
+        ),
+
         # SLAM
         Node(
             package='slam_gmapping',
             executable='slam_gmapping',
             name='slam_gmapping',
-            parameters=[],
+            parameters=[
+                # {
+                    # "scan": "/scan",
+                # }
+            ],
             output='screen'
         ),
 
