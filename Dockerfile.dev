@@ -1,79 +1,27 @@
-FROM osrf/ros:foxy-desktop
+FROM autodriveecosystem/autodrive_f1tenth_api:2024-iros-practice
 
 WORKDIR /home/autodrive_devkit
 
-ARG devkit_url=https://github.com/AutoDRIVE-Ecosystem/AutoDRIVE-F1TENTH-Sim-Racing/releases/download/2024-iros-practice/autodrive_devkit.zip
-
 SHELL ["/bin/bash", "-c"]
-
-# Copied from https://github.com/AutoDRIVE-Ecosystem/AutoDRIVE-F1TENTH-Sim-Racing/blob/2024-iros-practice/autodrive_devkit.Dockerfile
-# Install system dependencies
-RUN apt update \
-    && apt install -y --no-install-recommends \
-    sudo \
-    wget \
-    gedit \
-    nano \
-    vim \
-    curl \
-    unzip \
-    net-tools \
-    python3-pip \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
-RUN pip3 install attrdict
-RUN pip3 install numpy
-RUN pip3 install pillow
-RUN pip3 install opencv-contrib-python
-RUN pip3 install eventlet==0.33.3
-RUN pip3 install Flask==1.1.1
-RUN pip3 install Flask-SocketIO==4.1.0
-RUN pip3 install python-socketio==4.2.0
-RUN pip3 install python-engineio==3.13.0
-RUN pip3 install greenlet==1.0.0
-RUN pip3 install gevent==21.1.2
-RUN pip3 install gevent-websocket==0.10.1
-RUN pip3 install Jinja2==3.0.3
-RUN pip3 install itsdangerous==2.0.1
-RUN pip3 install werkzeug==2.0.3
-RUN pip3 install transforms3d
-
-# Install ROS 2 dependencies
-RUN apt update && apt install -y --no-install-recommends \
-    ros-$ROS_DISTRO-tf-transformations \
-    ros-$ROS_DISTRO-imu-tools
-
-# Install tools for display
-RUN apt update --fix-missing \
-    && apt install -y xvfb ffmpeg libgdal-dev libsm6 libxext6
 
 # Set up bashrc
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
-RUN echo "source /home/autodrive_devkit/ros2_ws/install/setup.bash" >> ~/.bashrc
-
-# Create workspace
-RUN mkdir -p ros2_ws/src
-
-# Download devkit
-RUN wget ${devkit_url} -O ros2_ws/src/autodrive_devkit.zip
-RUN unzip ros2_ws/src/autodrive_devkit.zip -d ros2_ws/src/autodrive_devkit
-RUN rm ros2_ws/src/autodrive_devkit.zip
+RUN echo "source /home/autodrive_devkit/install/setup.bash" >> ~/.bashrc
 
 # Copy package.xml so we can install packages declared there
-COPY package.xml ros2_ws/src/temp/
+COPY package.xml src/temp/
 
 # Install declared packages
 RUN source /opt/ros/foxy/setup.bash \
-    && cd ros2_ws/src \
+    && cd src \
     && rosdep update --include-eol-distros  \
     && rosdep install --from-paths . -i -y --include-eol-distros
 
 # Remove package.xml so things sync correctly with devcontainers
-RUN rm -r ros2_ws/src/temp/
+RUN rm -r src/temp/
 
 # Build so workspace is ready
-RUN source /opt/ros/foxy/setup.bash && cd ros2_ws && colcon build
+RUN source /opt/ros/foxy/setup.bash && colcon build
 
 # Expose sim port
 EXPOSE 4567

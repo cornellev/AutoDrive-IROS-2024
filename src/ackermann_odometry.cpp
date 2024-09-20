@@ -16,7 +16,7 @@ const double WHEEL_BASE = 0.3240;
 const double TRACK_WIDTH = 0.2360;
 const double WHEEL_RADIUS = 0.0590;
 const double WHEEL_CIRC = 2 * M_PI * WHEEL_RADIUS;
-const double ENCODER_TICKS_PER_REV = 16;
+const double ENCODER_TICKS_PER_REV = 32;
 
 class AckermannOdometry : public rclcpp::Node
 {
@@ -41,7 +41,7 @@ public:
             left_encoder_sub_,
             right_encoder_sub_
         );
-        sync_->setAgePenalty(0.1);  // 50 ms
+        sync_->setAgePenalty(0.1);  // 10 ms
 
         sync_->registerCallback(
             std::bind(
@@ -55,14 +55,14 @@ public:
 
 private:
     void steerCallback(std_msgs::msg::Float32::ConstSharedPtr msg) {
-        latest_steering = msg->data;
+        latest_steering_ = msg->data;
     }
 
     void encoderCallback(
         const sensor_msgs::msg::JointState::ConstSharedPtr &left_encoder, 
         const sensor_msgs::msg::JointState::ConstSharedPtr &right_encoder)
     {
-        rclcpp::Time current_time(left_encoder->header.stamp);
+        rclcpp::Time current_time = left_encoder->header.stamp;
 
         if (!has_last) {
             has_last = true;
@@ -79,7 +79,7 @@ private:
         double prev_left_encoder_rotations = last_left_->position[0] / ENCODER_TICKS_PER_REV;
         double prev_right_encoder_rotations = last_right_->position[0] / ENCODER_TICKS_PER_REV;
         
-        double steering_angle = latest_steering;
+        double steering_angle = latest_steering_;
 
         // Calculate distance traveled by each wheel (based on encoder values)
         double delta_left = (left_encoder_rotations - prev_left_encoder_rotations) * WHEEL_CIRC;
@@ -159,7 +159,7 @@ private:
     sensor_msgs::msg::JointState::ConstSharedPtr last_left_;
     sensor_msgs::msg::JointState::ConstSharedPtr last_right_;
 
-    double latest_steering = 0.0;
+    double latest_steering_ = 0.0;
 
     double x_ = 0.0;
     double y_ = 0.0;
