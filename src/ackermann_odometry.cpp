@@ -84,8 +84,8 @@ private:
         }
 
         // Compute odometry
-        double delta_left = (left_encoder_rotations_ - prev_left_encoder_rotations_) * wheel_radius_;
-        double delta_right = (right_encoder_rotations_ - prev_right_encoder_rotations_) * wheel_radius_;
+        double delta_left = (left_encoder_rotations_ - prev_left_encoder_rotations_) * M_PI * wheel_radius_;
+        double delta_right = (right_encoder_rotations_ - prev_right_encoder_rotations_) * M_PI * wheel_radius_;
         double delta_distance = (delta_left + delta_right) / 2.0;
 
         double turning_radius = wheelbase_ / std::tan(steering_angle_);

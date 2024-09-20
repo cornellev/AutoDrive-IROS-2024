@@ -81,8 +81,6 @@ ekf_filter_node:
     imu0_differential: false
     imu0_relative: true
     imu0_queue_size: 10
-    # imu0_pose_rejection_threshold: 2.0          
-    # imu0_twist_rejection_threshold: 2.0   
     imu0_linear_acceleration_rejection_threshold: 10.0
     imu0_two_d_mode: true
     imu0_remove_gravitational_acceleration: false
@@ -97,7 +95,4 @@ ekf_filter_node:
     odom0_differential: false
     odom0_relative: true
     odom0_queue_size: 10
-    # odom0_pose_rejection_threshold: 3.0
-    # odom0_twist_rejection_threshold: 3.0
-    # odom0_linear_acceleration_rejection_threshold: 2.0
     odom0_two_d_mode: true

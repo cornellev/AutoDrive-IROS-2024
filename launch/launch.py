@@ -102,16 +102,33 @@ def generate_launch_description():
 
         # SLAM
         Node(
-            package='slam_gmapping',
-            executable='slam_gmapping',
-            name='slam_gmapping',
+            package='slam_toolbox',
+            executable='async_slam_toolbox_node',
+            name='async_slam_toolbox_node',
             parameters=[
-                # {
-                    # "scan": "/scan",
-                # }
+                {
+                    "odom_frame": "odom",
+                    "base_frame": "base_link",
+                    "map_frame": "map",
+                    "scan_topic": "/scan",
+                    "scan_queue_size": 1,
+                    "map_update_interval": .3,
+                }
             ],
             output='screen'
         ),
+
+        # Node(
+        #     package='slam_gmapping',
+        #     executable='slam_gmapping',
+        #     name='slam_gmapping',
+        #     parameters=[
+        #         # {
+        #             # "scan": "/scan",
+        #         # }
+        #     ],
+        #     output='screen'
+        # ),
 
         # Include the simulator bringup launch file
         IncludeLaunchDescription(
