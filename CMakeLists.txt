@@ -6,9 +6,9 @@ if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
 endif()
 
-# Default to C++14
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -25,6 +25,8 @@ find_package(sensor_msgs REQUIRED)
 find_package(slam_toolbox REQUIRED)
 find_package(robot_localization REQUIRED)
 find_package(tf2_ros REQUIRED)
+find_package(control_toolbox REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 # C++ executables
 add_executable(frame_republisher src/frame_republisher.cpp)
@@ -38,6 +40,9 @@ ament_target_dependencies(trajectory_follower rclcpp std_msgs sensor_msgs slam_t
 
 add_executable(sensor_republisher src/sensor_republisher.cpp)
 ament_target_dependencies(sensor_republisher rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+
+add_executable(actuator_control src/actuator_control.cpp)
+ament_target_dependencies(actuator_control rclcpp std_msgs nav_msgs message_filters control_toolbox)
 
 # Include node directories
 target_include_directories(
@@ -58,11 +63,15 @@ target_include_directories(
 target_include_directories(
   sensor_republisher PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
+  $<INSTALL_INTERFACE:include>)
 
-# Install C++ executables
+target_include_directories(
+  actuator_control PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
 install(TARGETS 
+  actuator_control
   frame_republisher
   ackermann_odometry
   trajectory_follower

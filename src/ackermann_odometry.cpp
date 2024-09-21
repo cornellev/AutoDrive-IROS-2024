@@ -2,180 +2,175 @@
 #include <sensor_msgs/msg/joint_state.hpp>
 #include <std_msgs/msg/float32.hpp>
 #include <nav_msgs/msg/odometry.hpp>
-#include <tf2_ros/transform_broadcaster.h>
+#include <geometry_msgs/msg/twist.hpp>
+#include <geometry_msgs/msg/pose.hpp>
 #include <tf2/LinearMath/Quaternion.h>
+#include <optional>
+#include <message_filters/subscriber.h>
+#include <message_filters/sync_policies/approximate_time.h>
+#include <message_filters/synchronizer.h>
+#include <message_filters/time_synchronizer.h>
+#include <memory>
+
+const double WHEEL_BASE = 0.3240;
+const double TRACK_WIDTH = 0.2360;
+const double WHEEL_RADIUS = 0.0590;
+const double WHEEL_CIRC = 2 * M_PI * WHEEL_RADIUS;
+const double ENCODER_TICKS_PER_REV = 32;
 
 class AckermannOdometry : public rclcpp::Node
 {
 public:
     AckermannOdometry() : Node("ackermann_odometry")
     {
-        RCLCPP_INFO(this->get_logger(), "Initializing Ackermann Odometry Node");
+        RCLCPP_INFO(this->get_logger(), "Initializing Ackermann odometry node");
 
-        // Parameters
-        wheelbase_ = 0.3240;
-        wheel_radius_ = 0.0590;
-        encoder_ticks_per_rotation_ = 16.0;
-        prev_time_ = this->now();
+        odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/wheel_odom",
+            rclcpp::QoS(rclcpp::KeepLast(10))
+        );
 
-        // Publishers and Subscriptions
-        odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/wheel_odom", 10);
-
-        timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(30), 
-            std::bind(&AckermannOdometry::timerCallback, this));
-
-        left_encoder_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
-            "/autodrive/f1tenth_1/left_encoder", 10, 
-            std::bind(&AckermannOdometry::leftEncoderCallback, this, std::placeholders::_1));
-        
-        right_encoder_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
-            "/autodrive/f1tenth_1/right_encoder", 10, 
-            std::bind(&AckermannOdometry::rightEncoderCallback, this, std::placeholders::_1));
-
+        rclcpp::SensorDataQoS sensor_qos;
+        left_encoder_sub_.subscribe(this, "/autodrive/f1tenth_1/left_encoder", sensor_qos.get_rmw_qos_profile());
+        right_encoder_sub_.subscribe(this, "/autodrive/f1tenth_1/right_encoder", sensor_qos.get_rmw_qos_profile());
         steering_sub_ = this->create_subscription<std_msgs::msg::Float32>(
-            "/autodrive/f1tenth_1/steering", 10, 
-            std::bind(&AckermannOdometry::steeringCallback, this, std::placeholders::_1));
+            "/autodrive/f1tenth_1/steering", sensor_qos,
+            std::bind(&AckermannOdometry::steerCallback, this, std::placeholders::_1));
+
+        sync_ = std::make_shared<message_filters::Synchronizer<sync_policy>>(
+            sync_policy(10),
+            left_encoder_sub_,
+            right_encoder_sub_
+        );
+        sync_->setAgePenalty(0.1);  // 10 ms
+
+        sync_->registerCallback(
+            std::bind(
+                &AckermannOdometry::encoderCallback, this,
+                std::placeholders::_1, std::placeholders::_2
+            )
+        );
+
+        RCLCPP_INFO(this->get_logger(), "Started Ackermann odometry");
     }
 
 private:
-    void leftEncoderCallback(const sensor_msgs::msg::JointState::SharedPtr msg)
-    {
-        initializeEncoder(left_encoder_initialized_, initial_left_encoder_, msg->position[0]);
-        left_encoder_rotations_ = encoderToRotations(msg->position[0]) - initial_left_encoder_;
+    void steerCallback(std_msgs::msg::Float32::ConstSharedPtr msg) {
+        latest_steering_ = msg->data;
     }
 
-    void rightEncoderCallback(const sensor_msgs::msg::JointState::SharedPtr msg)
+    void encoderCallback(
+        const sensor_msgs::msg::JointState::ConstSharedPtr &left_encoder, 
+        const sensor_msgs::msg::JointState::ConstSharedPtr &right_encoder)
     {
-        initializeEncoder(right_encoder_initialized_, initial_right_encoder_, msg->position[0]);
-        right_encoder_rotations_ = encoderToRotations(msg->position[0]) - initial_right_encoder_;
-    }
+        rclcpp::Time current_time = left_encoder->header.stamp;
 
-    void steeringCallback(const std_msgs::msg::Float32::SharedPtr msg)
-    {
-        steering_angle_ = msg->data;
-    }
-
-    double encoderToRotations(double encoder_value) 
-    {
-        return encoder_value / encoder_ticks_per_rotation_;
-    }
-
-    void initializeEncoder(bool &encoder_initialized, double &initial_encoder, double encoder_value)
-    {
-        if (!encoder_initialized)
-        {
-            initial_encoder = encoderToRotations(encoder_value);
-            encoder_initialized = true;
-        }
-    }
-
-    void timerCallback()
-    {
-        auto current_time = this->now();
-        double dt = (current_time - prev_time_).seconds();
-        if (dt < 1e-6) return;
-
-        if (fabs(left_encoder_rotations_ - prev_left_encoder_rotations_) < 1e-6 &&
-            fabs(right_encoder_rotations_ - prev_right_encoder_rotations_) < 1e-6)
-        {
-            publishOdometry(current_time, 0.0, 0.0); // Publish 0 velocity
+        if (!has_last) {
+            has_last = true;
+            last_time_ = current_time;
+            last_left_ = left_encoder;
+            last_right_ = right_encoder;
             return;
         }
 
-        // Compute odometry
-        double delta_left = (left_encoder_rotations_ - prev_left_encoder_rotations_) * M_PI * wheel_radius_;
-        double delta_right = (right_encoder_rotations_ - prev_right_encoder_rotations_) * M_PI * wheel_radius_;
+        rclcpp::Duration dt = current_time - last_time_;
+
+        double left_encoder_rotations = left_encoder->position[0] / ENCODER_TICKS_PER_REV;
+        double right_encoder_rotations = right_encoder->position[0] / ENCODER_TICKS_PER_REV;
+        double prev_left_encoder_rotations = last_left_->position[0] / ENCODER_TICKS_PER_REV;
+        double prev_right_encoder_rotations = last_right_->position[0] / ENCODER_TICKS_PER_REV;
+        
+        double steering_angle = latest_steering_;
+
+        // Calculate distance traveled by each wheel (based on encoder values)
+        double delta_left = (left_encoder_rotations - prev_left_encoder_rotations) * WHEEL_CIRC;
+        double delta_right = (right_encoder_rotations - prev_right_encoder_rotations) * WHEEL_CIRC;
+        
+        // Calculate the average distance the vehicle has traveled
         double delta_distance = (delta_left + delta_right) / 2.0;
 
-        double turning_radius = wheelbase_ / std::tan(steering_angle_);
+        // Calculate the turning radius based on the steering angle (R = L / tan(steering angle))
+        // I think this actually does work when steering_angle = 0 due to float magic
+        double turning_radius = WHEEL_BASE / std::tan(steering_angle);
+
+        // Compute the angular velocity (delta_theta) based on the turning radius and distance traveled
         double delta_theta = delta_distance / turning_radius;
 
-        // Update position and orientation
-        current_orientation_ += delta_theta;
-        x_ += delta_distance * std::cos(current_orientation_);
-        y_ += delta_distance * std::sin(current_orientation_);
+        // Update the orientation of the vehicle
+        theta_ += delta_theta;
 
-        // Publish odometry
-        publishOdometry(current_time, delta_distance / dt, delta_theta / dt);
+        // Compute change in position using Ackermann model
+        double delta_x = delta_distance * std::cos(theta_);
+        double delta_y = delta_distance * std::sin(theta_);
 
-        // Update previous values
-        prev_left_encoder_rotations_ = left_encoder_rotations_;
-        prev_right_encoder_rotations_ = right_encoder_rotations_;
-        prev_time_ = current_time;
+        // Update the vehicle's position
+        x_ += delta_x;
+        y_ += delta_y;
 
-        RCLCPP_INFO(this->get_logger(), "x=%f, y=%f, theta=%f", x_, y_, current_orientation_);
-    }
+        // Calculate velocity
+        double forward_vel = delta_distance / dt.seconds();
 
-    void publishOdometry(const rclcpp::Time &current_time, double linear_velocity, double angular_velocity)
-    {
-        /**
-         * Publish odometry message using current pose/twist along with calculated velocities.
-         */
+        // Update previous encoder values and time for next iteration
+        last_time_ = current_time;
+        last_left_ = left_encoder;
+        last_right_ = right_encoder;
+
+        // Publish the odometry message
         auto odom_msg = nav_msgs::msg::Odometry();
+
         odom_msg.header.stamp = current_time;
         odom_msg.header.frame_id = "odom";
         odom_msg.child_frame_id = "base_link";
 
+        // Set the position
         odom_msg.pose.pose.position.x = x_;
         odom_msg.pose.pose.position.y = y_;
         odom_msg.pose.pose.position.z = 0.0;
 
+        // Set the velocity
+        odom_msg.twist.twist.linear.x = forward_vel;
+
+        // Set the orientation
         tf2::Quaternion q;
-        q.setRPY(0.0, 0.0, current_orientation_);
+        q.setRPY(0.0, 0.0, theta_);
         odom_msg.pose.pose.orientation.x = q.x();
         odom_msg.pose.pose.orientation.y = q.y();
         odom_msg.pose.pose.orientation.z = q.z();
         odom_msg.pose.pose.orientation.w = q.w();
 
-        odom_msg.twist.twist.linear.x = linear_velocity;
-        odom_msg.twist.twist.angular.z = angular_velocity;
-
-        for (int i = 0; i < 36; i++)
-        {
-            odom_msg.pose.covariance[i] = covariance_[i];
-        }
-
+        // Publish the message
         odom_publisher_->publish(odom_msg);
+        
+        // Print the odometry
+        RCLCPP_DEBUG(this->get_logger(), "x=%f, y=%f, theta=%f", x_, y_, theta_);
     }
 
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
-    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr left_encoder_sub_;
-    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr right_encoder_sub_;
-    rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr steering_sub_;
-    rclcpp::TimerBase::SharedPtr timer_;
+    message_filters::Subscriber<sensor_msgs::msg::JointState> left_encoder_sub_;
+    message_filters::Subscriber<sensor_msgs::msg::JointState> right_encoder_sub_;
+    rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr steering_sub_;  // have to do this as a normal subscription since no header
 
-    double wheelbase_;
-    double wheel_radius_;
-    double encoder_ticks_per_rotation_;
-    double prev_left_encoder_rotations_ = 0.0;
-    double prev_right_encoder_rotations_ = 0.0;
-    double left_encoder_rotations_ = 0.0;
-    double right_encoder_rotations_ = 0.0;
-    double steering_angle_ = 0.0;
+    typedef message_filters::sync_policies::ApproximateTime<
+        sensor_msgs::msg::JointState, 
+        sensor_msgs::msg::JointState> sync_policy;
+    std::shared_ptr<message_filters::Synchronizer<sync_policy>> sync_;
+
+    bool has_last = false;
+    rclcpp::Time last_time_;
+    sensor_msgs::msg::JointState::ConstSharedPtr last_left_;
+    sensor_msgs::msg::JointState::ConstSharedPtr last_right_;
+
+    double latest_steering_ = 0.0;
+
     double x_ = 0.0;
     double y_ = 0.0;
-    double current_orientation_ = 0.0;
-    double initial_left_encoder_ = 0.0;
-    double initial_right_encoder_ = 0.0;
-    bool left_encoder_initialized_ = false;
-    bool right_encoder_initialized_ = false;
-
-    double covariance_[36] = {
-        0.01, 0, 0, 0, 0, 0,
-        0, 0.01, 0, 0, 0, 0,
-        0, 0, 0.01, 0, 0, 0,
-        0, 0, 0, 0.01, 0, 0,
-        0, 0, 0, 0, 0.01, 0,
-        0, 0, 0, 0, 0, 0.01
-    };
-    rclcpp::Time prev_time_;
+    double theta_ = 0.0;
 };
 
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    rclcpp::spin(std::make_shared<AckermannOdometry>());
+    auto node = std::make_shared<AckermannOdometry>();
+    rclcpp::spin(node);
     rclcpp::shutdown();
     return 0;
 }
