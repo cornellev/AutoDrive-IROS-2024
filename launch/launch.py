@@ -84,13 +84,13 @@ def generate_launch_description():
                 name="ackermann_odometry",
                 parameters=[],
             ),
-            # Node(
-            #     package="autodrive_iros_2024",
-            #     executable="actuator_control",
-            #     name="actuator_control_node",
-            #     parameters=[actuator_config_path],
-            #     output="screen",
-            # ),
+            Node(
+                package="autodrive_iros_2024",
+                executable="actuator_control",
+                name="actuator_control_node",
+                parameters=[actuator_config_path],
+                output="screen",
+            ),
             # Include the simulator bringup launch file
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(simulator_bringup_launch_path),
