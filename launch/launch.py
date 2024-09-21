@@ -99,8 +99,8 @@ def generate_launch_description():
             ),
             Node(
                 package="autodrive_iros_2024",
-                executable="trajectory_follower",
-                name="trajectory_follower",
+                executable="simple_driver",
+                name="simple_driver",
                 parameters=[],
                 output="screen",
             ),

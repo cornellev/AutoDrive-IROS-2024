@@ -35,8 +35,8 @@ ament_target_dependencies(frame_republisher rclcpp std_msgs sensor_msgs slam_too
 add_executable(ackermann_odometry src/ackermann_odometry.cpp)
 ament_target_dependencies(ackermann_odometry rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
 
-add_executable(trajectory_follower src/trajectory_follower.cpp)
-ament_target_dependencies(trajectory_follower rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+add_executable(simple_driver src/simple_driver.cpp)
+ament_target_dependencies(simple_driver rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
 
 add_executable(sensor_republisher src/sensor_republisher.cpp)
 ament_target_dependencies(sensor_republisher rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
@@ -56,7 +56,7 @@ target_include_directories(
   $<INSTALL_INTERFACE:include>)
 
 target_include_directories(
-  trajectory_follower PUBLIC
+  simple_driver PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
@@ -74,7 +74,7 @@ install(TARGETS
   actuator_control
   frame_republisher
   ackermann_odometry
-  trajectory_follower
+  simple_driver
   sensor_republisher
   DESTINATION lib/${PROJECT_NAME})
 
