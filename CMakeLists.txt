@@ -41,8 +41,11 @@ ament_target_dependencies(trajectory_follower rclcpp std_msgs sensor_msgs slam_t
 add_executable(sensor_republisher src/sensor_republisher.cpp)
 ament_target_dependencies(sensor_republisher rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
 
-add_executable(actuator_control src/actuator_control.cpp)
-ament_target_dependencies(actuator_control rclcpp std_msgs nav_msgs message_filters control_toolbox)
+add_executable(speed_controller src/actuator_control/speed_controller.cpp)
+ament_target_dependencies(speed_controller rclcpp std_msgs nav_msgs message_filters control_toolbox)
+
+add_executable(steer_controller src/actuator_control/steer_controller.cpp)
+ament_target_dependencies(steer_controller rclcpp std_msgs)
 
 # Include node directories
 target_include_directories(
@@ -66,12 +69,18 @@ target_include_directories(
   $<INSTALL_INTERFACE:include>)
 
 target_include_directories(
-  actuator_control PUBLIC
+  speed_controller PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
+target_include_directories(
+  steer_controller PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
 install(TARGETS 
-  actuator_control
+  speed_controller
+  steer_controller
   frame_republisher
   ackermann_odometry
   trajectory_follower

@@ -16,7 +16,7 @@ const double WHEEL_BASE = 0.3240;
 const double TRACK_WIDTH = 0.2360;
 const double WHEEL_RADIUS = 0.0590;
 const double WHEEL_CIRC = 2 * M_PI * WHEEL_RADIUS;
-const double ENCODER_TICKS_PER_REV = 32;
+const double ENCODER_TICKS_PER_REV = 16;
 
 class AckermannOdometry : public rclcpp::Node
 {
@@ -25,7 +25,7 @@ public:
     {
         RCLCPP_INFO(this->get_logger(), "Initializing Ackermann odometry node");
 
-        odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/wheel_odom",
+        odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/odometry/wheel",
             rclcpp::QoS(rclcpp::KeepLast(10))
         );
 
