@@ -20,6 +20,10 @@ RUN source /opt/ros/foxy/setup.bash \
 # Remove package.xml so things sync correctly with devcontainers
 RUN rm -r src/temp/
 
+# Download gmapping
+RUN git clone https://github.com/Project-MANAS/slam_gmapping.git
+RUN mv slam_gmapping ros2_ws/src/
+
 # Build so workspace is ready
 RUN source /opt/ros/foxy/setup.bash && colcon build
 

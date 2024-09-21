@@ -48,15 +48,11 @@ def generate_launch_description():
                 name="static_odom_to_base_link",
                 arguments=["0", "0", "0", "0", "0", "0", "odom", "base_link"],
             ),
-            #### NODES ####
-            # robot_localization ekf_node
             Node(
-                package="robot_localization",
-                executable="ekf_node",
-                name="ekf_filter_node",
-                parameters=[
-                    robot_localization_config_path  # Replace with the correct path to your parameters file
-                ],
+                package="autodrive_iros_2024",
+                executable="sensor_republisher",
+                name="sensor_republisher",
+                output="screen",
             ),
             Node(
                 package="autodrive_iros_2024",
@@ -78,6 +74,16 @@ def generate_launch_description():
                     }
                 ],
             ),
+            #### NODES ####
+            # robot_localization ekf_node
+            Node(
+                package="robot_localization",
+                executable="ekf_node",
+                name="ekf_filter_node",
+                parameters=[
+                    robot_localization_config_path  # Replace with the correct path to your parameters file
+                ],
+            ),
             Node(
                 package="autodrive_iros_2024",
                 executable="ackermann_odometry",
@@ -89,6 +95,30 @@ def generate_launch_description():
                 executable="actuator_control",
                 name="actuator_control_node",
                 parameters=[actuator_config_path],
+                output="screen",
+            ),
+            Node(
+                package="autodrive_iros_2024",
+                executable="trajectory_follower",
+                name="trajectory_follower",
+                parameters=[],
+                output="screen",
+            ),
+            # SLAM
+            Node(
+                package="slam_toolbox",
+                executable="async_slam_toolbox_node",
+                name="async_slam_toolbox_node",
+                parameters=[
+                    {
+                        "odom_frame": "odom",
+                        "base_frame": "base_link",
+                        "map_frame": "map",
+                        "scan_topic": "/scan",
+                        "scan_queue_size": 1,
+                        "map_update_interval": 0.3,
+                    }
+                ],
                 output="screen",
             ),
             # Include the simulator bringup launch file

@@ -15,12 +15,11 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Find dependencies
 find_package(ament_cmake REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
+find_package(ament_cmake_python REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclpy REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(slam_toolbox REQUIRED)
@@ -29,23 +28,45 @@ find_package(tf2_ros REQUIRED)
 find_package(control_toolbox REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
+# C++ executables
 add_executable(frame_republisher src/frame_republisher.cpp)
 ament_target_dependencies(frame_republisher rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+
+add_executable(ackermann_odometry src/ackermann_odometry.cpp)
+ament_target_dependencies(ackermann_odometry rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+
+add_executable(trajectory_follower src/trajectory_follower.cpp)
+ament_target_dependencies(trajectory_follower rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+
+add_executable(sensor_republisher src/sensor_republisher.cpp)
+ament_target_dependencies(sensor_republisher rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
+
+add_executable(actuator_control src/actuator_control.cpp)
+ament_target_dependencies(actuator_control rclcpp std_msgs nav_msgs message_filters control_toolbox)
+
+# Include node directories
 target_include_directories(
   frame_republisher PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-add_executable(ackermann_odometry src/ackermann_odometry.cpp)
-ament_target_dependencies(ackermann_odometry rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
 target_include_directories(
   ackermann_odometry PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-add_executable(actuator_control src/actuator_control.cpp)
-ament_target_dependencies(actuator_control rclcpp std_msgs nav_msgs message_filters control_toolbox)
-target_include_directories(actuator_control PUBLIC
+target_include_directories(
+  trajectory_follower PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
+target_include_directories(
+  sensor_republisher PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
+target_include_directories(
+  actuator_control PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
@@ -53,8 +74,11 @@ install(TARGETS
   actuator_control
   frame_republisher
   ackermann_odometry
+  trajectory_follower
+  sensor_republisher
   DESTINATION lib/${PROJECT_NAME})
 
+# Install directories for launch and config
 install(DIRECTORY launch/
   DESTINATION share/${PROJECT_NAME}/launch
 )
@@ -63,14 +87,20 @@ install(DIRECTORY config/
   DESTINATION share/${PROJECT_NAME}/config
 )
 
+# Install Python scripts
+install(PROGRAMS
+  scripts/data_collector.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+# If using launch files in Python
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}/
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # uncomment the line when a copyright and license is not present in all source files
-  #set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # uncomment the line when this package is not in a git repo
-  #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 

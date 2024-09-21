@@ -3,7 +3,7 @@
 ## Developing
 
 ### With DevContainers
-There is a devcontainer set up using the `Dockerfile.dev` dockerfile. You should be able to use DevContainers in many major IDEs, like VSCode, JetBrains, etc. If you don't want to use a devcontainer, you can mount a volume and still use your favorite IDE by following Sid's guide below.
+There is a devcontainer set up using the `Dockerfile.dev` dockerfile. You should be able to use DevContainers in many major IDEs, like VSCode, JetBrains, etc. If you don't want to use a devcontainer, you can mount a volume and still use your favorite IDE by following Sid's guide below. To run the container on windows, it may be necessary to replace the `DISPLAY` parameter with `host.docker.internal:0` (where 0 is replaced with the location of your local X11 server) to get X11 forwarding working. Additionally, the path to XMing (or whatever server you're using) must be specified by absolute path instead of using the non-existent tmp directory.
 
 For VSCode, there are some minimal extensions installed (mainly for ROS, C++, and Python). You are welcome to install your own--as long as you do not have to rebuild your container, they will persist. You may have to handle your own setup if you're not using VSCode.
 

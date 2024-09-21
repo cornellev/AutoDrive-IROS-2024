@@ -13,6 +13,7 @@ public:
     {
         // Get the list of frames to republish
         this->declare_parameter<std::vector<std::string>>("frames", std::vector<std::string>{});
+        
         this->get_parameter("frames", frames_);
 
         // Initialize TF listener and broadcaster
@@ -22,7 +23,7 @@ public:
 
         // Set timer to periodically republish the frames
         timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(10),  // 100 Hz
+            std::chrono::milliseconds(30),
             std::bind(&FrameRepublisher::republishFrames, this));
     }
 
