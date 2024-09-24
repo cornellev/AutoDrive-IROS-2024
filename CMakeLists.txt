@@ -36,6 +36,9 @@ ament_target_dependencies(ackermann_odometry rclcpp std_msgs sensor_msgs slam_to
 add_executable(trajectory_follower src/trajectory_follower.cpp)
 ament_target_dependencies(trajectory_follower rclcpp std_msgs sensor_msgs slam_toolbox robot_localization tf2_ros)
 
+add_executable(friction_test src/friction_test.cpp)
+ament_target_dependencies(friction_test rclcpp std_msgs)
+
 # Include node directories
 target_include_directories(
   frame_republisher PUBLIC
@@ -52,11 +55,17 @@ target_include_directories(
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+target_include_directories(
+  friction_test PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+
 # Install C++ executables
 install(TARGETS 
   frame_republisher
   ackermann_odometry
   trajectory_follower
+  friction_test
   DESTINATION lib/${PROJECT_NAME})
 
 # Install directories for launch and config

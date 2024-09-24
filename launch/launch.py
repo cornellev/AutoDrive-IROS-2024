@@ -85,10 +85,17 @@ def generate_launch_description():
             parameters=[],
             output='screen'
         ),
+        # Node(
+        #     package='autodrive_iros_2024',
+        #     executable='trajectory_follower',
+        #     name='trajectory_follower',
+        #     parameters=[],
+        #     output='screen'
+        # ),
         Node(
             package='autodrive_iros_2024',
-            executable='trajectory_follower',
-            name='trajectory_follower',
+            executable='friction_test',
+            name='friction_test',
             parameters=[],
             output='screen'
         ),
