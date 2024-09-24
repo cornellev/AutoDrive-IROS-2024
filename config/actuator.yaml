@@ -1,8 +1,15 @@
-actuator_control:
+speed_controller:
   ros__parameters:
-    odom_topic: /odometry/filtered
-    target_topic: /target_velocity
+    odom_topic: /odometry/wheel
+    target_topic: /control_target/velocity
     throttle_topic: /autodrive/f1tenth_1/throttle_command
-    p: 0.1
-    i: 0
-    d: 0
+    p: 0.05
+    i: 0.01
+    d: 0.0
+    max_i: 0.25
+steer_controller:
+  ros__parameters:
+    feedback_topic: /autodrive/f1tenth_1/steering
+    target_topic: /control_target/steer_angle
+    out_topic: /autodrive/f1tenth_1/steering_command
+    steer_velocity: 1.0  # radians per second

@@ -92,8 +92,15 @@ def generate_launch_description():
             ),
             Node(
                 package="autodrive_iros_2024",
-                executable="actuator_control",
-                name="actuator_control_node",
+                executable="speed_controller",
+                name="speed_controller",
+                parameters=[actuator_config_path],
+                output="screen",
+            ),
+            Node(
+                package="autodrive_iros_2024",
+                executable="steer_controller",
+                name="steer_controller",
                 parameters=[actuator_config_path],
                 output="screen",
             ),
