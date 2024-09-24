@@ -1,6 +1,6 @@
 speed_controller:
   ros__parameters:
-    odom_topic: /odometry/wheel
+    odom_topic: /odometry/filtered
     target_topic: /control_target/velocity
     throttle_topic: /autodrive/f1tenth_1/throttle_command
     p: 0.05

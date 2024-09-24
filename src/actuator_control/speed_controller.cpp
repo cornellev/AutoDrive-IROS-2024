@@ -75,7 +75,6 @@ private:
     void target_callback(const std_msgs::msg::Float32::ConstSharedPtr target) 
     {
         target_speed_ = target->data;
-        RCLCPP_DEBUG(get_logger(), "Got target %f", target->data);
     }
 
     float target_speed_ = 0.0;

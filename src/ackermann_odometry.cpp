@@ -90,15 +90,11 @@ private:
 
         double delta_left = new_left_rotations - old_left_rotations;
         
-        // double delta_distance = delta_left * (2.0) * M_PI * wheel_radius_;
+        double delta_distance = delta_left * (2.0) * M_PI * wheel_radius_;
 
-        // double linear_velocity = delta_distance / dt;
-
-        double linear_velocity = throttle_ * 7.5;
-
-        double delta_distance = linear_velocity * dt;
-
-        RCLCPP_INFO(this->get_logger(), "throttle=%f", fabs(throttle_));
+        double linear_velocity = delta_distance / dt;
+        
+        // RCLCPP_INFO(this->get_logger(), "throttle=%f", fabs(throttle_));
 
         double average_angle = (new_steering_angle + old_steering_angle) / 2.0;
         double turning_radius = wheelbase_ / std::tan(average_angle);

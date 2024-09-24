@@ -71,7 +71,7 @@ private:
 
     void target_callback(const std_msgs::msg::Float32::ConstSharedPtr target) 
     {
-        target_steer_ = target->data;
+        target_steer_ = target->data / .5236;
     }
 
     float steer_velocity_ = 0.0;

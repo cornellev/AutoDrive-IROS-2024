@@ -31,6 +31,8 @@ private:
     {
         lidar_received = true;
 
+        lidar_msg_ = *msg;
+
         float min_range = -1.5;
 
         float scan_angle_min = msg->angle_min;
@@ -60,6 +62,8 @@ private:
             }
         }
 
+        RCLCPP_INFO(this->get_logger(), "hereb");
+
         // Calculate angle and range of farthest point
         float real_angle = scan_angle_min + farthest_angle * angle_increment;
         float s = farthest_range;
@@ -73,25 +77,30 @@ private:
         // Calculate steering angle based on ackermann steering model
         float steering_angle = atan(2 * wheel_base * sin(real_angle) / s);
 
+        float dist_leftm = std::min(
+            lidar_msg_.ranges[719],
+            lidar_msg_.ranges[719]
+        );
+
         // Use distance left and distance right to adjust steering angle from being too close to walls
         float dist_left = std::min(
-            lidar_msg_.ranges[(M_PI / 4 - scan_angle_min) / angle_increment],
-            lidar_msg_.ranges[(M_PI / 3 - scan_angle_min) / angle_increment]
+            lidar_msg_.ranges[(M_PI / 4.0 - scan_angle_min) / angle_increment],
+            lidar_msg_.ranges[(M_PI / 3.0 - scan_angle_min) / angle_increment]
         );
 
         float dist_right = std::min(
-            lidar_msg_.ranges[(-M_PI / 4 - scan_angle_min) / angle_increment],
-            lidar_msg_.ranges[(-M_PI / 3 - scan_angle_min) / angle_increment]
+            lidar_msg_.ranges[(-M_PI / 4.0 - scan_angle_min) / angle_increment],
+            lidar_msg_.ranges[(-M_PI / 3.0 - scan_angle_min) / angle_increment]
         );
 
         dist_left = std::min(
             dist_left,
-            lidar_msg_.ranges[(M_PI / 2 - scan_angle_min) / angle_increment]
+            lidar_msg_.ranges[(M_PI / 2.0 - scan_angle_min) / angle_increment]
         );
 
         dist_right = std::min(
             dist_right,
-            lidar_msg_.ranges[(-M_PI / 2 - scan_angle_min) / angle_increment]
+            lidar_msg_.ranges[(-M_PI / 2.0 - scan_angle_min) / angle_increment]
         );
 
         float new_steering_angle = steering_angle - .2/(dist_left) + .2/(dist_right);
@@ -102,8 +111,10 @@ private:
         steering_pub_->publish(steering_msg);
 
         auto velocity_msg = std_msgs::msg::Float32();
-        velocity_msg.data = .3;
+        velocity_msg.data = .15;
         velocity_pub_->publish(velocity_msg);
+
+        RCLCPP_INFO(this->get_logger(), "steering=%f", new_steering_angle);
     }
 
     rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr steering_pub_;
