@@ -73,29 +73,25 @@ private:
         // Calculate steering angle based on ackermann steering model
         float steering_angle = atan(2 * wheel_base * sin(real_angle) / s);
 
-        // Based on the lidar min and angle increment, find the value at straight left
-        float min_angle = lidar_msg_.angle_min;
-        float angle_increment = lidar_msg_.angle_increment;
-
         // Use distance left and distance right to adjust steering angle from being too close to walls
         float dist_left = std::min(
-            lidar_msg_.ranges[(M_PI / 4 - min_angle) / angle_increment],
-            lidar_msg_.ranges[(M_PI / 3 - min_angle) / angle_increment]
+            lidar_msg_.ranges[(M_PI / 4 - scan_angle_min) / angle_increment],
+            lidar_msg_.ranges[(M_PI / 3 - scan_angle_min) / angle_increment]
         );
 
         float dist_right = std::min(
-            lidar_msg_.ranges[(-M_PI / 4 - min_angle) / angle_increment],
-            lidar_msg_.ranges[(-M_PI / 3 - min_angle) / angle_increment]
+            lidar_msg_.ranges[(-M_PI / 4 - scan_angle_min) / angle_increment],
+            lidar_msg_.ranges[(-M_PI / 3 - scan_angle_min) / angle_increment]
         );
 
         dist_left = std::min(
             dist_left,
-            lidar_msg_.ranges[(M_PI / 2 - min_angle) / angle_increment]
+            lidar_msg_.ranges[(M_PI / 2 - scan_angle_min) / angle_increment]
         );
 
         dist_right = std::min(
             dist_right,
-            lidar_msg_.ranges[(-M_PI / 2 - min_angle) / angle_increment]
+            lidar_msg_.ranges[(-M_PI / 2 - scan_angle_min) / angle_increment]
         );
 
         float new_steering_angle = steering_angle - .2/(dist_left) + .2/(dist_right);
