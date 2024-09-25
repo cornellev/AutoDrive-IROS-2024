@@ -111,13 +111,13 @@ def generate_launch_description():
                 parameters=[],
                 output="screen",
             ),
-            Node(
-                package="autodrive_iros_2024",
-                executable="imu_to_euler_node",
-                name="imu_to_euler_node",
-                parameters=[],
-                output="screen",
-            ),
+            # Node(
+            #     package="autodrive_iros_2024",
+            #     executable="imu_to_euler_node",
+            #     name="imu_to_euler_node",
+            #     parameters=[],
+            #     output="screen",
+            # ),
             # SLAM
             Node(
                 package="slam_toolbox",
