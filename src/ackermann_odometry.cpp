@@ -64,7 +64,7 @@ private:
         tf2::Matrix3x3 mat(quat);
         double roll, pitch, yaw;
         mat.getRPY(roll, pitch, yaw);
-        current_orientation_ = yaw;
+        current_orientation_ = yaw + M_PI / 2.0;
     }
 
     void throttleCallback(const std_msgs::msg::Float32::SharedPtr msg)
@@ -100,7 +100,7 @@ private:
 
         double delta_left = new_left_rotations - old_left_rotations;
         
-        double delta_distance = delta_left * 2.0 * M_PI * wheel_radius_;
+        double delta_distance = delta_left * 4.0 * M_PI * wheel_radius_;
         double linear_velocity = delta_distance / dt;
 
         // Update position using current orientation (from IMU)

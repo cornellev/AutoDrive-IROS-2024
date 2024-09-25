@@ -131,8 +131,8 @@ def generate_launch_description():
                         "scan_topic": "/scan",
                         "scan_queue_size": 1,
                         "map_update_interval": 0.05,
-                        "position_covariance_scale": 10.0,
-                        "yaw_covariance_scale": 10.0,
+                        "position_covariance_scale": 1.0,
+                        "yaw_covariance_scale": 1.0,
                         "min_laser_range": .06,
                         "max_laser_range": 10.0,
                         "use_scan_matching": True,
@@ -141,7 +141,7 @@ def generate_launch_description():
                         "minimum_travel_distance": .1,
                         "minimum_travel_heading": .1,
                         "correlation_search_space_dimension": .2,
-                        "loop_search_space_dimension": 20.0,
+                        "loop_search_space_dimension": 3.0,
                         "angle_variance_penalty": 0.0
                     }
                 ],
