@@ -61,15 +61,8 @@ def generate_launch_description():
                 parameters=[
                     {
                         "frames": [
-                            "left_encoder",
-                            "right_encoder",
                             "imu",
                             "lidar",
-                            "front_camera",
-                            "front_left_wheel",
-                            "front_right_wheel",
-                            "rear_left_wheel",
-                            "rear_right_wheel",
                         ]
                     }
                 ],
