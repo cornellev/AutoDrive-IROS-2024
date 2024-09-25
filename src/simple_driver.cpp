@@ -39,7 +39,7 @@ private:
         float scan_angle_max = msg->angle_max;
         float angle_increment = msg->angle_increment;
 
-        int center_index = msg->ranges.size() / 2;
+        // int center_index = msg->ranges.size() / 2;
 
         int start_index = (min_range - scan_angle_min) / angle_increment;
         int end_index = (scan_angle_max + min_range - scan_angle_min) / angle_increment;
@@ -77,10 +77,10 @@ private:
         // Calculate steering angle based on ackermann steering model
         float steering_angle = atan(2 * wheel_base * sin(real_angle) / s);
 
-        float dist_leftm = std::min(
-            lidar_msg_.ranges[719],
-            lidar_msg_.ranges[719]
-        );
+        // float dist_leftm = std::min(
+        //     lidar_msg_.ranges[719],
+        //     lidar_msg_.ranges[719]
+        // );
 
         // Use distance left and distance right to adjust steering angle from being too close to walls
         float dist_left = std::min(
