@@ -64,7 +64,7 @@ private:
         tf2::Matrix3x3 mat(quat);
         double roll, pitch, yaw;
         mat.getRPY(roll, pitch, yaw);
-        current_orientation_ = yaw + M_PI / 2.0;
+        current_orientation_ = yaw;
     }
 
     void throttleCallback(const std_msgs::msg::Float32::SharedPtr msg)
