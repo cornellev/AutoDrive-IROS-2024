@@ -47,6 +47,24 @@ private:
         int farthest_angle = start_index;
         float farthest_range = 0.0;
 
+        // Average distance overall
+        float avg_distance = 0.0;
+        for (int i = start_index; i < end_index; i++) {
+
+            if (msg->ranges[i] > msg->range_max) {
+                avg_distance += msg->range_max;
+            } else {
+                avg_distance += msg->ranges[i];
+            }
+        }
+
+        RCLCPP_INFO(this->get_logger(), "avg=%f", avg_distance);
+        avg_distance /= ((float) (end_index - start_index));
+
+        RCLCPP_INFO(this->get_logger(), "total=%f", (float) (end_index - start_index));
+
+        RCLCPP_INFO(this->get_logger(), "avg_distance=%f", avg_distance);
+
         // Find point in scan which has the farthest distance
         for (int i = start_index; i < end_index; i++) {
             if (
@@ -62,8 +80,6 @@ private:
             }
         }
 
-        RCLCPP_INFO(this->get_logger(), "hereb");
-
         // Calculate angle and range of farthest point
         float real_angle = scan_angle_min + farthest_angle * angle_increment;
         float s = farthest_range;
@@ -76,11 +92,6 @@ private:
 
         // Calculate steering angle based on ackermann steering model
         float steering_angle = atan(2 * wheel_base * sin(real_angle) / s);
-
-        float dist_leftm = std::min(
-            lidar_msg_.ranges[719],
-            lidar_msg_.ranges[719]
-        );
 
         // Use distance left and distance right to adjust steering angle from being too close to walls
         float dist_left = std::min(
@@ -103,7 +114,9 @@ private:
             lidar_msg_.ranges[(-M_PI / 2.0 - scan_angle_min) / angle_increment]
         );
 
-        float new_steering_angle = steering_angle - .2/(dist_left) + .2/(dist_right);
+        // float new_steering_angle = steering_angle - .05/(pow(dist_left, 2.0)) + .05/(pow(dist_right, 2.9));
+
+        float new_steering_angle = steering_angle - .1/dist_left + .1/dist_right;
 
         // Publish steering angle and velocity
         auto steering_msg = std_msgs::msg::Float32();

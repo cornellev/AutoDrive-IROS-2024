@@ -71,12 +71,14 @@ private:
 
     void target_callback(const std_msgs::msg::Float32::ConstSharedPtr target) 
     {
-        target_steer_ = target->data / .5236;
+        target_steer_ = target->data / max_steering_angle;
     }
 
     float steer_velocity_ = 0.0;
     float target_steer_ = 0.0;
     float current_steer_ = 0.0;
+
+    float max_steering_angle = 0.5236;
 
     rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr feedback_sub_;
     rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr target_sub_;

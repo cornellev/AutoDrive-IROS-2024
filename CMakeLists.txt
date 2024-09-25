@@ -47,6 +47,9 @@ ament_target_dependencies(speed_controller rclcpp std_msgs nav_msgs message_filt
 add_executable(steer_controller src/actuator_control/steer_controller.cpp)
 ament_target_dependencies(steer_controller rclcpp std_msgs)
 
+add_executable(imu_to_euler_node src/imu_to_euler_node.cpp)
+ament_target_dependencies(imu_to_euler_node rclcpp nav_msgs sensor_msgs tf2 tf2_ros)
+
 # Include node directories
 target_include_directories(
   frame_republisher PUBLIC
@@ -78,6 +81,12 @@ target_include_directories(
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
+target_include_directories(
+  imu_to_euler_node PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+
 install(TARGETS 
   speed_controller
   steer_controller
@@ -85,6 +94,7 @@ install(TARGETS
   ackermann_odometry
   simple_driver
   sensor_republisher
+  imu_to_euler_node
   DESTINATION lib/${PROJECT_NAME})
 
 # Install directories for launch and config

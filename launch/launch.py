@@ -76,14 +76,14 @@ def generate_launch_description():
             ),
             #### NODES ####
             # robot_localization ekf_node
-            Node(
-                package="robot_localization",
-                executable="ekf_node",
-                name="ekf_filter_node",
-                parameters=[
-                    robot_localization_config_path  # Replace with the correct path to your parameters file
-                ],
-            ),
+            # Node(
+            #     package="robot_localization",
+            #     executable="ekf_node",
+            #     name="ekf_filter_node",
+            #     parameters=[
+            #         robot_localization_config_path  # Replace with the correct path to your parameters file
+            #     ],
+            # ),
             Node(
                 package="autodrive_iros_2024",
                 executable="ackermann_odometry",
@@ -111,6 +111,13 @@ def generate_launch_description():
                 parameters=[],
                 output="screen",
             ),
+            Node(
+                package="autodrive_iros_2024",
+                executable="imu_to_euler_node",
+                name="imu_to_euler_node",
+                parameters=[],
+                output="screen",
+            ),
             # SLAM
             Node(
                 package="slam_toolbox",
@@ -124,8 +131,8 @@ def generate_launch_description():
                         "scan_topic": "/scan",
                         "scan_queue_size": 1,
                         "map_update_interval": 0.05,
-                        # "position_covariance_scale": 1.0,
-                        # "yaw_covariance_scale": 1.0,
+                        "position_covariance_scale": 10.0,
+                        "yaw_covariance_scale": 10.0,
                         "min_laser_range": .06,
                         "max_laser_range": 10.0,
                         "use_scan_matching": True,
@@ -135,7 +142,7 @@ def generate_launch_description():
                         "minimum_travel_heading": .1,
                         "correlation_search_space_dimension": .2,
                         "loop_search_space_dimension": 20.0,
-                        # "angle_variance_penalty": 1.0
+                        "angle_variance_penalty": 0.0
                     }
                 ],
                 output="screen",
