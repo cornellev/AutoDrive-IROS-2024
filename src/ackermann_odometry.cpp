@@ -1,9 +1,11 @@
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/joint_state.hpp>
+#include <sensor_msgs/msg/imu.hpp>
 #include <std_msgs/msg/float32.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2/LinearMath/Quaternion.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
 class AckermannOdometry : public rclcpp::Node
 {
@@ -19,41 +21,55 @@ public:
         prev_time_ = this->now();
 
         // Publishers and Subscriptions
-        odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/wheel_odom", 10);
-
-        timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(30), 
-            std::bind(&AckermannOdometry::timerCallback, this));
+        odom_publisher_ = this->create_publisher<nav_msgs::msg::Odometry>("/odometry/filtered", 10);
 
         left_encoder_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
             "/autodrive/f1tenth_1/left_encoder", 10, 
             std::bind(&AckermannOdometry::leftEncoderCallback, this, std::placeholders::_1));
-        
-        right_encoder_sub_ = this->create_subscription<sensor_msgs::msg::JointState>(
-            "/autodrive/f1tenth_1/right_encoder", 10, 
-            std::bind(&AckermannOdometry::rightEncoderCallback, this, std::placeholders::_1));
 
-        steering_sub_ = this->create_subscription<std_msgs::msg::Float32>(
-            "/autodrive/f1tenth_1/steering", 10, 
-            std::bind(&AckermannOdometry::steeringCallback, this, std::placeholders::_1));
+        imu_sub_ = this->create_subscription<sensor_msgs::msg::Imu>(
+            "/imu", 10, 
+            std::bind(&AckermannOdometry::imuCallback, this, std::placeholders::_1));
+
+        throttle_sub_ = this->create_subscription<std_msgs::msg::Float32>(
+            "/autodrive/f1tenth_1/throttle", 10,
+            std::bind(&AckermannOdometry::throttleCallback, this, std::placeholders::_1));
+
+        tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
     }
 
 private:
     void leftEncoderCallback(const sensor_msgs::msg::JointState::SharedPtr msg)
     {
-        initializeEncoder(left_encoder_initialized_, initial_left_encoder_, msg->position[0]);
-        left_encoder_rotations_ = encoderToRotations(msg->position[0]) - initial_left_encoder_;
+        if (!left_encoder_initialized_) {
+            old_left_rotations = msg->position[0] / encoder_ticks_per_rotation_;
+            new_left_rotations = old_left_rotations;
+            left_encoder_initialized_ = true;
+        } else {
+            new_left_rotations = msg->position[0] / encoder_ticks_per_rotation_;
+
+            timerCallback();
+        }
     }
 
-    void rightEncoderCallback(const sensor_msgs::msg::JointState::SharedPtr msg)
+    void imuCallback(const sensor_msgs::msg::Imu::SharedPtr msg)
     {
-        initializeEncoder(right_encoder_initialized_, initial_right_encoder_, msg->position[0]);
-        right_encoder_rotations_ = encoderToRotations(msg->position[0]) - initial_right_encoder_;
+        // Convert quaternion to RPY (roll, pitch, yaw)
+        tf2::Quaternion quat(
+            msg->orientation.x,
+            msg->orientation.y,
+            msg->orientation.z,
+            msg->orientation.w);
+
+        tf2::Matrix3x3 mat(quat);
+        double roll, pitch, yaw;
+        mat.getRPY(roll, pitch, yaw);
+        current_orientation_ = yaw;
     }
 
-    void steeringCallback(const std_msgs::msg::Float32::SharedPtr msg)
+    void throttleCallback(const std_msgs::msg::Float32::SharedPtr msg)
     {
-        steering_angle_ = msg->data;
+        throttle_ = msg->data;
     }
 
     double encoderToRotations(double encoder_value) 
@@ -76,35 +92,34 @@ private:
         double dt = (current_time - prev_time_).seconds();
         if (dt < 1e-6) return;
 
-        if (fabs(left_encoder_rotations_ - prev_left_encoder_rotations_) < 1e-6 &&
-            fabs(right_encoder_rotations_ - prev_right_encoder_rotations_) < 1e-6)
+        if (fabs(new_left_rotations - old_left_rotations) < 1e-6)
         {
             publishOdometry(current_time, 0.0, 0.0); // Publish 0 velocity
             return;
         }
 
-        // Compute odometry
-        double delta_left = (left_encoder_rotations_ - prev_left_encoder_rotations_) * wheel_radius_;
-        double delta_right = (right_encoder_rotations_ - prev_right_encoder_rotations_) * wheel_radius_;
-        double delta_distance = (delta_left + delta_right) / 2.0;
+        double delta_left = new_left_rotations - old_left_rotations;
+        
+        double delta_distance = delta_left * 4.0 * M_PI * wheel_radius_;
+        double linear_velocity = delta_distance / dt;
 
-        double turning_radius = wheelbase_ / std::tan(steering_angle_);
-        double delta_theta = delta_distance / turning_radius;
-
-        // Update position and orientation
-        current_orientation_ += delta_theta;
+        // Update position using current orientation (from IMU)
         x_ += delta_distance * std::cos(current_orientation_);
         y_ += delta_distance * std::sin(current_orientation_);
 
+        // Angular velocity is derived from IMU orientation changes
+        double angular_velocity = (current_orientation_ - old_orientation_) / dt;
+
         // Publish odometry
-        publishOdometry(current_time, delta_distance / dt, delta_theta / dt);
+        publishOdometry(current_time, linear_velocity, angular_velocity);
 
-        // Update previous values
-        prev_left_encoder_rotations_ = left_encoder_rotations_;
-        prev_right_encoder_rotations_ = right_encoder_rotations_;
+        // Broadcast the transform from base_link to odom
+        broadcastTransform(current_time);
+
+        old_left_rotations = new_left_rotations;
+        old_orientation_ = current_orientation_;
+
         prev_time_ = current_time;
-
-        RCLCPP_INFO(this->get_logger(), "x=%f, y=%f, theta=%f", x_, y_, current_orientation_);
     }
 
     void publishOdometry(const rclcpp::Time &current_time, double linear_velocity, double angular_velocity)
@@ -119,7 +134,6 @@ private:
 
         odom_msg.pose.pose.position.x = x_;
         odom_msg.pose.pose.position.y = y_;
-        odom_msg.pose.pose.position.z = 0.0;
 
         tf2::Quaternion q;
         q.setRPY(0.0, 0.0, current_orientation_);
@@ -139,27 +153,50 @@ private:
         odom_publisher_->publish(odom_msg);
     }
 
+    void broadcastTransform(const rclcpp::Time &current_time)
+    {
+        geometry_msgs::msg::TransformStamped transformStamped;
+
+        transformStamped.header.stamp = current_time;
+        transformStamped.header.frame_id = "odom";
+        transformStamped.child_frame_id = "base_link";
+
+        transformStamped.transform.translation.x = x_;
+        transformStamped.transform.translation.y = y_;
+        transformStamped.transform.translation.z = 0.0;
+
+        tf2::Quaternion q;
+        q.setRPY(0.0, 0.0, current_orientation_);
+        transformStamped.transform.rotation.x = q.x();
+        transformStamped.transform.rotation.y = q.y();
+        transformStamped.transform.rotation.z = q.z();
+        transformStamped.transform.rotation.w = q.w();
+
+        tf_broadcaster_->sendTransform(transformStamped);
+    }
+
     rclcpp::Publisher<nav_msgs::msg::Odometry>::SharedPtr odom_publisher_;
     rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr left_encoder_sub_;
-    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr right_encoder_sub_;
-    rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr steering_sub_;
-    rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Subscription<sensor_msgs::msg::Imu>::SharedPtr imu_sub_;
+    rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr throttle_sub_;
+
+    std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
 
     double wheelbase_;
     double wheel_radius_;
     double encoder_ticks_per_rotation_;
-    double prev_left_encoder_rotations_ = 0.0;
-    double prev_right_encoder_rotations_ = 0.0;
-    double left_encoder_rotations_ = 0.0;
-    double right_encoder_rotations_ = 0.0;
-    double steering_angle_ = 0.0;
+
+    double throttle_ = 0.0;
+
     double x_ = 0.0;
     double y_ = 0.0;
     double current_orientation_ = 0.0;
-    double initial_left_encoder_ = 0.0;
-    double initial_right_encoder_ = 0.0;
+    double old_orientation_ = 0.0;
+
+    double old_left_rotations = 0.0;
+    double new_left_rotations = 0.0;
+
     bool left_encoder_initialized_ = false;
-    bool right_encoder_initialized_ = false;
 
     double covariance_[36] = {
         0.01, 0, 0, 0, 0, 0,

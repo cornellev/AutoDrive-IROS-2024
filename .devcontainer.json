@@ -3,8 +3,8 @@
     "build": {
         "dockerfile": "Dockerfile.dev"
     },
-    "workspaceMount": "source=${localWorkspaceFolder},target=/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024,type=bind",
-    "workspaceFolder": "/home/autodrive_devkit/ros2_ws/src/autodrive_iros_2024",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/autodrive_devkit/src/autodrive_iros_2024,type=bind",
+    "workspaceFolder": "/home/autodrive_devkit/src/autodrive_iros_2024",
     "runArgs": [
         "--rm",
         "--network=host",
@@ -12,10 +12,10 @@
         "--privileged"
     ],
     "containerEnv": {
-        "DISPLAY": "host.docker.internal:0"
+        "DISPLAY": "${localEnv:DISPLAY}"
     },
     "mounts": [
-        "source=C:\\Program Files (x86)\\Xming,target=/tmp/.X11-unix,type=bind,consistency=cached"
+        "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached"
     ],
     "customizations": {
         "vscode": {
@@ -29,7 +29,8 @@
             },
             "extensions": [
                 "ms-iot.vscode-ros",
-                "ms-vscode.cpptools-extension-pack"
+                "ms-vscode.cpptools-extension-pack",
+                "ms-python.black-formatter"
             ]
         }
     },
