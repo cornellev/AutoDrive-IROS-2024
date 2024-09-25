@@ -13,6 +13,7 @@ public:
     {
         // Get the list of frames to republish
         this->declare_parameter<std::vector<std::string>>("frames", std::vector<std::string>{});
+        
         this->get_parameter("frames", frames_);
 
         // Initialize TF listener and broadcaster
