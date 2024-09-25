@@ -48,7 +48,7 @@ add_executable(steer_controller src/actuator_control/steer_controller.cpp)
 ament_target_dependencies(steer_controller rclcpp std_msgs)
 
 add_executable(friction_test src/friction_test.cpp)
-ament_target_dependencies(friction_test rclcpp std_msgs)
+ament_target_dependencies(friction_test rclcpp std_msgs sensor_msgs geometry_msgs)
 
 # Include node directories
 target_include_directories(
