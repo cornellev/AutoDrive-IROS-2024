@@ -53,80 +53,24 @@ public:
 private:
     void scan_callback(const sensor_msgs::msg::LaserScan::SharedPtr msg)
     {
+        auto new_msg = *msg;
         
-        // Try to get the transform from OLD_BASE_LINK to OLD_LIDAR
-        geometry_msgs::msg::TransformStamped old_transform;
-        try
-        {
-            old_transform = tf_buffer_.lookupTransform(
-                old_base_link_frame_, old_lidar_frame_, rclcpp::Time(0));
+        new_msg.header.frame_id = new_frame_id_;
 
-            // Create the new transform for base_link -> lidar_republished
-            geometry_msgs::msg::TransformStamped new_transform;
-            new_transform.header.stamp = old_transform.header.stamp;  // Use the same timestamp as the lidar scan
-            new_transform.header.frame_id = new_base_link_frame_;  // Set to new base_link frame
-            new_transform.child_frame_id = new_frame_id_;          // Set to new lidar frame
-
-            // Copy the transform data
-            new_transform.transform = old_transform.transform;
-
-            // Broadcast the new transform
-            tf_broadcaster_->sendTransform(new_transform);
-
-            // RCLCPP_INFO(this->get_logger(), "Published base_link -> %s transform", new_frame_id_.c_str());
-
-            // Modify the frame_id of the message
-            auto new_msg = *msg;
-            new_msg.header.stamp = old_transform.header.stamp;
-            new_msg.header.frame_id = new_frame_id_;
-
-            // Publish the modified message
-            publisher_->publish(new_msg);
-
-        }
-        catch (const tf2::TransformException & ex)
-        {
-            RCLCPP_WARN(this->get_logger(), "Could not get transform: %s", ex.what());
-        }
+        // Publish the modified message
+        publisher_->publish(new_msg);
 
     }
 
     void imu_callback(const sensor_msgs::msg::Imu::SharedPtr msg)
     {
-        // Try to get the transform from OLD_BASE_LINK to OLD_LIDAR
-        geometry_msgs::msg::TransformStamped old_transform;
-        try
-        {
-            old_transform = tf_buffer_.lookupTransform(
-                old_base_link_frame_, "imu", rclcpp::Time(0));
+        auto new_msg = *msg;
+        
+        new_msg.header.frame_id = "imu_republished";
 
-            // Create the new transform for base_link -> imu_republished
-            geometry_msgs::msg::TransformStamped new_transform;
-            new_transform.header.stamp = old_transform.header.stamp;  // Use the same timestamp as the lidar scan
-            new_transform.header.frame_id = new_base_link_frame_;  // Set to new base_link frame
-            new_transform.child_frame_id = "imu_republished";          // Set to new lidar frame
+        // Publish the modified message
+        publisher_imu_->publish(new_msg);
 
-            // Copy the transform data
-            new_transform.transform = old_transform.transform;
-
-            // Broadcast the new transform
-            tf_broadcaster_->sendTransform(new_transform);
-
-            // RCLCPP_INFO(this->get_logger(), "Published base_link -> %s transform", new_frame_id_.c_str());
-
-            // Modify the frame_id of the message
-            auto new_msg = *msg;
-            new_msg.header.stamp = old_transform.header.stamp;
-            new_msg.header.frame_id = "imu_republished";
-
-            // Publish the modified message
-            publisher_imu_->publish(new_msg);
-
-        }
-        catch (const tf2::TransformException & ex)
-        {
-            RCLCPP_WARN(this->get_logger(), "Could not get transform: %s", ex.what());
-        }
     }
 
     std::string old_sensor_topic_;

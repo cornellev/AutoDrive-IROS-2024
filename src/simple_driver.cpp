@@ -124,7 +124,7 @@ private:
         steering_pub_->publish(steering_msg);
 
         auto velocity_msg = std_msgs::msg::Float32();
-        velocity_msg.data = .75;
+        velocity_msg.data = .3;
         velocity_pub_->publish(velocity_msg);
 
         RCLCPP_INFO(this->get_logger(), "steering=%f", new_steering_angle);
