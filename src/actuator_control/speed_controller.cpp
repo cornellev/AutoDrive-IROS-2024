@@ -41,7 +41,7 @@ public:
         auto max_i = declare_parameter<double>("max_i", 0.0);
         pid_ = control_toolbox::Pid(p, i, d, max_i, -max_i, true);
 
-        RCLCPP_INFO(get_logger(), "Started velocity controller.");
+        RCLCPP_DEBUG(get_logger(), "Started velocity controller.");
     }
 
 private:
@@ -66,7 +66,7 @@ private:
         std_msgs::msg::Float32 msg;
         msg.data = command;
         publisher_->publish(msg);
-        RCLCPP_INFO(get_logger(), 
+        RCLCPP_DEBUG(get_logger(), 
             "Published throttle %f. Target: %f. Actual: %f. Error %f.", 
             msg.data, target_speed_, odom->twist.twist.linear.x, error
         );

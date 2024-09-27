@@ -83,13 +83,13 @@ def generate_launch_description():
                 name="ackermann_odometry",
                 parameters=[],
             ),
-            Node(
-                package="autodrive_iros_2024",
-                executable="speed_controller",
-                name="speed_controller",
-                parameters=[actuator_config_path],
-                output="screen",
-            ),
+            # Node(
+            #     package="autodrive_iros_2024",
+            #     executable="speed_controller",
+            #     name="speed_controller",
+            #     parameters=[actuator_config_path],
+            #     output="screen",
+            # ),
             Node(
                 package="autodrive_iros_2024",
                 executable="steer_controller",

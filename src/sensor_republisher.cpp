@@ -17,7 +17,7 @@ public:
       tf_buffer_(this->get_clock()),  // Initialize tf2 buffer with the node's clock
       tf_listener_(tf_buffer_)
     {
-        RCLCPP_INFO(this->get_logger(), "Initializing Sensor Republisher");
+        RCLCPP_DEBUG(this->get_logger(), "Initializing Sensor Republisher");
 
         // Create subscriber and publisher
         subscription_lidar_ = this->create_subscription<sensor_msgs::msg::LaserScan>(

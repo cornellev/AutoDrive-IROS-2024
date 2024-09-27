@@ -33,9 +33,9 @@ public:
 
         timer_ = create_wall_timer(std::chrono::milliseconds(TIMER_MS), std::bind(&SteerController::timer, this));
 
-        steer_velocity_ = declare_parameter<double>("steer_velocity", 0.1);
+        steer_velocity_ = declare_parameter<double>("steer_velocity", 0.06);
 
-        RCLCPP_INFO(get_logger(), "Started steering controller.");
+        RCLCPP_DEBUG(get_logger(), "Started steering controller.");
     }
 
 private:
