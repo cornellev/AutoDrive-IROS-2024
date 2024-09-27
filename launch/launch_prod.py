@@ -27,20 +27,20 @@ def generate_launch_description():
                 name="static_world_to_map",
                 arguments=["0", "0", "0", "0", "0", "0", "world", "map"],
             ),
-            # Static Transform: map -> odom
-            Node(
-                package="tf2_ros",
-                executable="static_transform_publisher",
-                name="static_map_to_odom",
-                arguments=["0", "0", "0", "0", "0", "0", "map", "odom"],
-            ),
+            # # Static Transform: map -> odom
+            # Node(
+            #     package="tf2_ros",
+            #     executable="static_transform_publisher",
+            #     name="static_map_to_odom",
+            #     arguments=["0", "0", "0", "0", "0", "0", "map", "odom"],
+            # ),
             # Static Transform: odom -> base_link
-            Node(
-                package="tf2_ros",
-                executable="static_transform_publisher",
-                name="static_odom_to_base_link",
-                arguments=["0", "0", "0", "0", "0", "0", "odom", "base_link"],
-            ),
+            # Node(
+            #     package="tf2_ros",
+            #     executable="static_transform_publisher",
+            #     name="static_odom_to_base_link",
+            #     arguments=["0", "0", "0", "0", "0", "0", "odom", "base_link"],
+            # ),
             Node(
                 package="autodrive_iros_2024",
                 executable="sensor_republisher",

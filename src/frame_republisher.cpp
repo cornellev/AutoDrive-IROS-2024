@@ -23,7 +23,7 @@ public:
 
         // Set timer to periodically republish the frames
         timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(30),
+            std::chrono::milliseconds(10),
             std::bind(&FrameRepublisher::republishFrames, this));
     }
 

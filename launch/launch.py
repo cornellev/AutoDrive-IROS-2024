@@ -35,19 +35,19 @@ def generate_launch_description():
                 arguments=["0", "0", "0", "0", "0", "0", "world", "map"],
             ),
             # Static Transform: map -> odom
-            Node(
-                package="tf2_ros",
-                executable="static_transform_publisher",
-                name="static_map_to_odom",
-                arguments=["0", "0", "0", "0", "0", "0", "map", "odom"],
-            ),
-            # Static Transform: odom -> base_link
-            Node(
-                package="tf2_ros",
-                executable="static_transform_publisher",
-                name="static_odom_to_base_link",
-                arguments=["0", "0", "0", "0", "0", "0", "odom", "base_link"],
-            ),
+            # Node(
+            #     package="tf2_ros",
+            #     executable="static_transform_publisher",
+            #     name="static_map_to_odom",
+            #     arguments=["0", "0", "0", "0", "0", "0", "map", "odom"],
+            # ),
+            # # Static Transform: odom -> base_link
+            # Node(
+            #     package="tf2_ros",
+            #     executable="static_transform_publisher",
+            #     name="static_odom_to_base_link",
+            #     arguments=["0", "0", "0", "0", "0", "0", "odom", "base_link"],
+            # ),
             Node(
                 package="autodrive_iros_2024",
                 executable="sensor_republisher",
@@ -69,14 +69,14 @@ def generate_launch_description():
             ),
             #### NODES ####
             # robot_localization ekf_node
-            Node(
-                package="robot_localization",
-                executable="ekf_node",
-                name="ekf_filter_node",
-                parameters=[
-                    robot_localization_config_path  # Replace with the correct path to your parameters file
-                ],
-            ),
+            # Node(
+            #     package="robot_localization",
+            #     executable="ekf_node",
+            #     name="ekf_filter_node",
+            #     parameters=[
+            #         robot_localization_config_path  # Replace with the correct path to your parameters file
+            #     ],
+            # ),
             Node(
                 package="autodrive_iros_2024",
                 executable="ackermann_odometry",
@@ -101,6 +101,13 @@ def generate_launch_description():
                 package="autodrive_iros_2024",
                 executable="simple_driver",
                 name="simple_driver",
+                parameters=[],
+                output="screen",
+            ),
+            Node(
+                package="autodrive_iros_2024",
+                executable="map_transform_node",
+                name="map_transform_node",
                 parameters=[],
                 output="screen",
             ),

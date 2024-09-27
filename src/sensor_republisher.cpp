@@ -21,14 +21,14 @@ public:
 
         // Create subscriber and publisher
         subscription_lidar_ = this->create_subscription<sensor_msgs::msg::LaserScan>(
-            "/autodrive/f1tenth_1/lidar", 10, std::bind(&SensorRepublisher::scan_callback, this, std::placeholders::_1));
+            "/autodrive/f1tenth_1/lidar", 1, std::bind(&SensorRepublisher::scan_callback, this, std::placeholders::_1));
 
         subscription_imu_ = this->create_subscription<sensor_msgs::msg::Imu>(
-            "/autodrive/f1tenth_1/imu", 10, std::bind(&SensorRepublisher::imu_callback, this, std::placeholders::_1));
+            "/autodrive/f1tenth_1/imu", 1, std::bind(&SensorRepublisher::imu_callback, this, std::placeholders::_1));
 
-        publisher_ = this->create_publisher<sensor_msgs::msg::LaserScan>("/scan", 10);
+        publisher_ = this->create_publisher<sensor_msgs::msg::LaserScan>("/scan", 1);
 
-        publisher_imu_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu", 10);
+        publisher_imu_ = this->create_publisher<sensor_msgs::msg::Imu>("/imu", 1);
 
         // Initialize TransformBroadcaster
         tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
