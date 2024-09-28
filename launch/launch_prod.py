@@ -21,8 +21,8 @@ def generate_launch_description():
     simulator_bringup_launch_path = os.path.join(
         get_package_share_directory("autodrive_f1tenth"),
         "launch",
-        # "simulator_bringup_headless.launch.py",
-        "simulator_bringup_rviz.launch.py",
+        "simulator_bringup_headless.launch.py",
+        # "simulator_bringup_rviz.launch.py",
     )
 
     return LaunchDescription(

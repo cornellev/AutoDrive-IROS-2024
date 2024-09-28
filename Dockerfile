@@ -8,21 +8,20 @@ SHELL ["/bin/bash", "-c"]
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc
 RUN echo "source /home/autodrive_devkit/install/setup.bash" >> ~/.bashrc
 
-# Copy the entire directory contents into the container's workspace
-COPY . src/autodrive_iros_2024
+# Copy package.xml so we can install packages declared there
+COPY package.xml src/temp/
 
-# Install declared packages from package.xml
+# Install declared packages
 RUN source /opt/ros/foxy/setup.bash \
     && cd src \
-    && rosdep update --include-eol-distros \
+    && rosdep update --include-eol-distros  \
     && rosdep install --from-paths . -i -y --include-eol-distros
 
-# Build the workspace
+# Remove package.xml so things sync correctly with devcontainers
+RUN rm -r src/temp/
+
+# Build so workspace is ready
 RUN source /opt/ros/foxy/setup.bash && colcon build
 
-# Expose simulation port
+# Expose sim port
 EXPOSE 4567
-
-COPY entrypoint.sh /home/autodrive_devkit/entrypoint.sh
-
-ENTRYPOINT [ "/home/autodrive_devkit/entrypoint.sh" ]

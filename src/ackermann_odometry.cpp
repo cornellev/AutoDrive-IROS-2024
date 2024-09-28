@@ -12,7 +12,7 @@ class AckermannOdometry : public rclcpp::Node
 public:
     AckermannOdometry() : Node("ackermann_odometry")
     {
-        RCLCPP_INFO(this->get_logger(), "Initializing Ackermann Odometry Node");
+        RCLCPP_DEBUG(this->get_logger(), "Initializing Ackermann Odometry Node");
 
         // Parameters
         wheelbase_ = 0.3240;
