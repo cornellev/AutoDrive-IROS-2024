@@ -12,4 +12,4 @@ steer_controller:
     feedback_topic: /autodrive/f1tenth_1/steering
     target_topic: /control_target/steer_angle
     out_topic: /autodrive/f1tenth_1/steering_command
-    steer_velocity: 2.0  # radians per second
+    steer_velocity: 2.0 # radians per second

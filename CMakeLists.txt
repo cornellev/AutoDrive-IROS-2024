@@ -48,7 +48,7 @@ add_executable(steer_controller src/actuator_control/steer_controller.cpp)
 ament_target_dependencies(steer_controller rclcpp std_msgs)
 
 add_executable(map_transform_node src/map_transform_node.cpp)
-ament_target_dependencies(map_transform_node rclcpp std_msgs geometry_msgs tf2_ros tf2 nav_msgs)
+ament_target_dependencies(map_transform_node rclcpp std_msgs geometry_msgs tf2_ros tf2 nav_msgs visualization_msgs control_toolbox)
 
 #include "rclcpp/rclcpp.hpp"
 #include "nav_msgs/msg/occupancy_grid.hpp"
