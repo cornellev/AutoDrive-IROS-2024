@@ -31,7 +31,7 @@ public:
 
         // Timer for periodically checking the transform between base_link and map
         timer_ = this->create_wall_timer(
-            std::chrono::milliseconds(50),
+            std::chrono::milliseconds(20),
             std::bind(&MapTransformNode::timer_callback, this));
 
         pid_ = control_toolbox::Pid(0.1, 0.0, 0.1);
@@ -44,53 +44,6 @@ private:
         RCLCPP_DEBUG(this->get_logger(), "Map received and saved.");
     }
 
-    double max_gap(double start_x, double start_y, double center_direction) {
-        double lower_bound = center_direction - M_PI / 2;
-        double upper_bound = center_direction + M_PI / 2;
-        double threshold = 1.75;
-        double step = M_PI / 90.0;
-
-        double lower_threshold = 1.0;
-
-        double best_lo = lower_bound;
-        double best_hi = lower_bound;
-        double lo = lower_bound;
-        double hi = lower_bound;
-
-        for (double angle = lower_bound; angle < upper_bound; angle += step) {
-            double dist = raytrace(start_x, start_y, angle);
-            if (dist > threshold) {
-                hi = angle;
-            } else {
-                if (hi - lo > best_hi - best_lo) {
-                    best_lo = lo;
-                    best_hi = hi;
-                }
-
-                hi = angle;
-                lo = hi;
-            }
-        }
-
-        if (raytrace(start_x, start_y, best_lo - step) < lower_threshold) {
-            RCLCPP_INFO(this->get_logger(), "HIT PADDING HIT PADDING HIT PADDING");
-            best_lo += step * 10; // Padding
-        }
-
-        if (raytrace(start_x, start_y, best_hi + step) < lower_threshold) {
-            RCLCPP_INFO(this->get_logger(), "HIT PADDING HIT PADDING HIT PADDING");
-            best_hi -= step * 10; // Padding
-        }
-
-        if (best_hi < best_lo) {
-            best_lo = best_hi;
-        } else if (best_lo > best_hi) {
-            best_hi = best_lo;
-        }
-
-        return (best_lo + best_hi) / 2;
-    }
-    
     // Function to lookup the transform from base_link to map and perform raytracing
     void timer_callback()
     {
@@ -99,7 +52,7 @@ private:
 
             // drive a little so we get map data
             auto velocity_msg = std_msgs::msg::Float32();
-            velocity_msg.data = .005;
+            velocity_msg.data = .01;
             velocity_pub_->publish(velocity_msg);
 
             return;
@@ -114,6 +67,13 @@ private:
             return;
         }
 
+        if (!last_time_.has_value()) {
+            last_time_ = rclcpp::Time(transform_stamped.header.stamp);
+            return;
+        }
+        rclcpp::Time current_time(transform_stamped.header.stamp);
+        rclcpp::Duration dt = current_time - last_time_.value();
+
         // Get the base_link position and yaw in the map frame
         double base_link_x = transform_stamped.transform.translation.x;
         double base_link_y = transform_stamped.transform.translation.y;
@@ -121,6 +81,7 @@ private:
         // Get yaw from the quaternion
         double yaw = get_yaw_from_quaternion(transform_stamped.transform.rotation);
 
+        // Raytrace in directions: yaw ± pi/4, yaw ± pi/3, and yaw ± pi/2
         double directions[8] = {
             yaw + M_PI / 2.,
             yaw + M_PI / 2.5,
@@ -163,18 +124,14 @@ private:
         double dist_left[4] = { distances[0], distances[1], distances[2], distances[3] };
         double dist_right[4] = { distances[4], distances[5], distances[6], distances[7] };
 
-        auto steering_msg = std_msgs::msg::Float32();
-        double angle = max_gap(base_link_x, base_link_y, yaw);
-        steering_msg.data = angle - yaw;
+        double error = dist_left[0] - dist_right[0];
+        double pid_control = pid_.computeCommand(error, dt.nanoseconds());
 
-        if (dist_left[0] < .4) {
-            steering_msg.data = (.4 - dist_left[0]) * (-M_PI / 9.0);
-        } else if (dist_right[0] < .4) {
-            steering_msg.data = (.4 - dist_right[0]) * (M_PI / 9.0);
-        }
-        
-        steering_pub_->publish(steering_msg);
+        auto steering_msg = std_msgs::msg::Float32();
+        steering_msg.data = steering_angle + 0.5 * pid_control;
+
         RCLCPP_INFO(this->get_logger(), "Steering angle: %.2f", steering_msg.data * 180.0 / M_PI);
+        steering_pub_->publish(steering_msg);
 
         auto velocity_msg = std_msgs::msg::Float32();
         velocity_msg.data = .01;
